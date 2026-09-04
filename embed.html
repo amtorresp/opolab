@@ -22,38 +22,47 @@ html,body{margin:0;padding:0;background:transparent;width:100%;overflow-x:hidden
   const EMBED_CSS=`
     html,body{min-height:0!important;overflow-x:hidden!important}
     body{background:#fff!important}
-    .wrap,.shell,main{width:100%!important;max-width:none!important;margin:0!important;padding:12px 14px!important}
-    .topbar,.nav,.crumbs{margin-top:0!important;margin-bottom:12px!important}
+    .wrap,.shell,main{width:100%!important;max-width:none!important;margin:0!important;padding:8px 10px!important}
+    .topbar,.nav,.crumbs{margin-top:0!important;margin-bottom:10px!important}
     .brand,.crumbCurrent,.crumbSep,.lab{display:none!important}
-    .hero{margin-top:4px!important;margin-bottom:14px!important;gap:16px!important}
-    .hero h1,.head h1{font-size:clamp(34px,5vw,54px)!important;margin-top:4px!important}
-    .hero p,.head p,.subtitle{font-size:16px!important;line-height:1.4!important}
-    .visual{height:135px!important;font-size:72px!important}
-    .sectionTitle{margin:14px 0 12px!important}
-    .games{gap:12px!important}
-    .game{min-height:150px!important;padding:18px!important}
-    .gameIcon{font-size:32px!important}
-    .game h3{font-size:22px!important}
-    .head{gap:14px!important}
-    .hud{gap:8px!important}
-    .pill{padding:10px 12px!important;min-width:0!important}
-    .pill b,.pill strong{font-size:20px!important}
-    .progress{margin:14px 0!important}
-    .board,.layout,.room{gap:14px!important}
-    .panel{padding:16px!important}
-    .item{min-height:48px!important;padding:12px 14px!important;font-size:16px!important}
-    .status{margin-top:12px!important;padding:14px 16px!important}
-    .case,.challenge{min-height:0!important;padding:20px!important}
-    .scene{margin:14px 0!important;padding:16px!important}
-    .question{margin:24px 0 18px!important;font-size:30px!important}
-    .answer{margin-top:22px!important}
-    .side{padding:18px!important}
+    .hero{margin-top:2px!important;margin-bottom:12px!important;gap:12px!important}
+    .hero h1,.head h1{font-size:clamp(32px,4.5vw,50px)!important;margin-top:2px!important}
+    .hero p,.head p,.subtitle{font-size:15px!important;line-height:1.35!important}
+    .visual{height:120px!important;font-size:64px!important}
+    .sectionTitle{margin:12px 0 10px!important}
+    .games{gap:10px!important}
+    .game{min-height:140px!important;padding:16px!important}
+    .gameIcon{font-size:30px!important}
+    .game h3{font-size:21px!important}
+    .head{gap:12px!important}
+    .hud{gap:7px!important}
+    .pill{padding:9px 10px!important;min-width:0!important}
+    .pill b,.pill strong{font-size:19px!important}
+    .progress{margin:12px 0!important}
+    .layout,.room{gap:12px!important}
+    .panel{padding:12px!important;border-radius:16px!important}
+    .panel h2{margin-bottom:10px!important;font-size:17px!important}
+    .cards{gap:8px!important}
+    .item{min-height:44px!important;padding:10px 12px!important;font-size:15px!important;border-radius:12px!important}
+    .status{margin-top:10px!important;padding:12px 14px!important}
+    .case,.challenge{min-height:0!important;padding:18px!important}
+    .scene{margin:12px 0!important;padding:14px!important}
+    .question{margin:20px 0 16px!important;font-size:28px!important}
+    .answer{margin-top:18px!important}
+    .side{padding:16px!important}
     footer,.foot{display:none!important}
+
+    /* OpoMatch: mantener ambas columnas visibles para poder relacionar sin desplazarse */
+    .board{grid-template-columns:minmax(0,1fr) minmax(0,1fr)!important;gap:10px!important;align-items:start!important}
+
     @media(max-width:1050px){
-      .board,.layout,.room{grid-template-columns:1fr!important}
+      .layout,.room{grid-template-columns:1fr!important}
       .side,.map{display:none!important}
       .hero,.head{grid-template-columns:1fr!important}
       .hud{grid-template-columns:repeat(2,1fr)!important}
+    }
+    @media(max-width:640px){
+      .board{grid-template-columns:1fr!important}
     }
   `;
 
@@ -68,13 +77,10 @@ html,body{margin:0;padding:0;background:transparent;width:100%;overflow-x:hidden
         style.textContent=EMBED_CSS;
         doc.head.appendChild(style);
       }
-      doc.documentElement.classList.add('opolab-embedded');
-      doc.body.classList.add('opolab-embedded');
-
       const resize=()=>{
         try{
-          const h=Math.max(doc.documentElement.scrollHeight,doc.body.scrollHeight,620);
-          frame.style.height=(h+8)+'px';
+          const h=Math.max(doc.body.scrollHeight,doc.documentElement.scrollHeight,560);
+          frame.style.height=(h+4)+'px';
         }catch(e){}
       };
       resize();
@@ -83,8 +89,7 @@ html,body{margin:0;padding:0;background:transparent;width:100%;overflow-x:hidden
         frame._ro=new ResizeObserver(resize);
         frame._ro.observe(doc.body);
       }
-      setTimeout(resize,100);
-      setTimeout(resize,500);
+      setTimeout(resize,100);setTimeout(resize,450);
     }catch(e){}
   }
   frame.addEventListener('load',adapt);
