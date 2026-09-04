@@ -5,12 +5,16 @@
 <meta name="viewport" content="width=device-width,initial-scale=1">
 <title>OpoLab · modo plataforma</title>
 <style>
-html,body{margin:0;padding:0;background:transparent;width:100%;overflow-x:hidden}
-#opolabFrame{display:block;width:100%;border:0;background:transparent;min-height:720px;overflow:hidden}
+html,body{margin:0;padding:0;background:transparent;width:100%;overflow-x:hidden;font-family:Inter,"Segoe UI",Arial,sans-serif}
+#opolabFrame{display:block;width:100%;border:0;background:transparent;min-height:560px;overflow:hidden}
+#platformFooter{text-align:center;padding:18px 10px 22px;color:#0aa8e5;font-weight:900;background:linear-gradient(180deg,rgba(255,255,255,0),#f5fafc)}
+#platformFooter em{display:block;color:#6c7e93;font-family:"Segoe Print","Comic Sans MS",cursive;font-weight:400;margin-top:4px;font-size:16px}
+#platformFooter .copy{display:block;color:#8a99ab;font-size:11px;font-weight:500;margin-top:5px}
 </style>
 </head>
 <body>
 <iframe id="opolabFrame" title="OpoLab" scrolling="no"></iframe>
+<div id="platformFooter">⚗ OpoLab · by Oposalud<em>Aprender también puede ser un juego</em><span class="copy">© 2026 Oposalud</span></div>
 <script>
 (function(){
   const frame=document.getElementById('opolabFrame');
@@ -50,20 +54,15 @@ html,body{margin:0;padding:0;background:transparent;width:100%;overflow-x:hidden
     .question{margin:20px 0 16px!important;font-size:28px!important}
     .answer{margin-top:18px!important}
     .side{padding:16px!important}
-    footer,.foot{display:none!important}
-
-    /* OpoMatch: mantener ambas columnas visibles para poder relacionar sin desplazarse */
+    footer,.foot,.brandFoot{display:none!important}
     .board{grid-template-columns:minmax(0,1fr) minmax(0,1fr)!important;gap:10px!important;align-items:start!important}
-
     @media(max-width:1050px){
       .layout,.room{grid-template-columns:1fr!important}
       .side,.map{display:none!important}
       .hero,.head{grid-template-columns:1fr!important}
       .hud{grid-template-columns:repeat(2,1fr)!important}
     }
-    @media(max-width:640px){
-      .board{grid-template-columns:1fr!important}
-    }
+    @media(max-width:640px){.board{grid-template-columns:1fr!important}}
   `;
 
   function adapt(){
@@ -79,7 +78,7 @@ html,body{margin:0;padding:0;background:transparent;width:100%;overflow-x:hidden
       }
       const resize=()=>{
         try{
-          const h=Math.max(doc.body.scrollHeight,doc.documentElement.scrollHeight,560);
+          const h=Math.max(doc.body.scrollHeight,doc.documentElement.scrollHeight,500);
           frame.style.height=(h+4)+'px';
         }catch(e){}
       };
