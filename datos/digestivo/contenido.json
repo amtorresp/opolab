@@ -1,0 +1,817 @@
+{
+ "fichas": {
+  "anat": [
+   "<b>Cuadrantes:</b> FID = ciego y apéndice · HD = hígado y vesícula · epigastrio = estómago, duodeno y páncreas.",
+   "<b>Esfínteres:</b> EES (cricofaríngeo) y EEI (cardias) en el esófago; píloro entre estómago y duodeno; válvula ileocecal (Bauhin).",
+   "<b>Absorción:</b> duodeno → hierro y calcio · yeyuno → la mayoría de nutrientes · íleon → B12 (con factor intrínseco), vitaminas A-D-E-K y sales biliares · colon → agua, Na y K.",
+   "<b>Vasos:</b> el tronco celíaco da la gástrica izquierda, la esplénica y la hepática común. Porta = mesentérica superior + esplénica.",
+   "<b>Páncreas:</b> jugo ALCALINO (bicarbonato) con lipasa, amilasa y tripsina. La CCK contrae la vesícula y relaja el esfínter de Oddi.",
+   "<b>Ángulo de Treitz:</b> por encima, hemorragia digestiva alta; por debajo, baja."
+  ],
+  "boca": [
+   "<b>Odinofagia</b> = dolor al tragar · <b>afagia</b> = imposibilidad · disfagia <b>orofaríngea</b> (neurológica, empieza con líquidos) vs <b>esofágica</b> (mecánica: de sólidos a líquidos; motora: ambos).",
+   "<b>MECV-V:</b> 5 → 10 → 20 ml; néctar → líquido → pudin. Seguridad: tos, cambio de voz, desaturación ≥ 3 %. Eficacia: sello labial, residuo, deglución fraccionada.",
+   "<b>EAT-10:</b> 10 ítems, 0-40 puntos, ≥ 3 = riesgo. Evitar pajitas y dobles texturas; barbilla al pecho; en hemiplejia, GIRAR la cabeza hacia el lado afectado.",
+   "<b>ERGE:</b> elevar el cabecero 15-20 cm, no acostarse en las 3 h tras comer, evitar grasas, café, chocolate y menta; las proteínas suben el tono del EEI. No dormir sobre el lado derecho.",
+   "<b>Barrett</b> = metaplasia premaligna. <b>Acalasia:</b> el EEI no se relaja; «pico de pájaro»; manometría; miotomía de Heller.",
+   "<b>Salivales:</b> parótida → Stenon · submandibular → Wharton · sublingual → Rivinus. <b>CAOD</b> = dentición permanente; <b>cod</b> = temporal."
+  ],
+  "estom": [
+   "<b>Úlcera</b> = sobrepasa la muscularis mucosae. Causas: <b>H. pylori</b> (1.ª) y <b>AINE</b> (2.ª).",
+   "Complicación más <b>frecuente</b>: hemorragia · más <b>grave</b>: perforación · también penetración y estenosis pilórica.",
+   "<b>Duodenal:</b> dolor 1,5-3 h tras comer, CEDE con la comida, nocturno. <b>Gástrica:</b> 20-30 min, no cede, más vómitos y más riesgo de malignidad.",
+   "<b>H. pylori:</b> test del aliento con C13 de elección; suspender IBP 2 semanas y antibióticos/bismuto 4 semanas (los antiácidos no interfieren). Tratamiento OCAM 10-14 días.",
+   "<b>Dumping precoz</b> (30-60 min, vasomotor) y <b>tardío</b> (90-180 min, hipoglucemia): 5-6 tomas, líquidos separados de las comidas, menos azúcares simples.",
+   "<b>Gastrectomía</b> → sin factor intrínseco → B12 intramuscular de por vida. <b>Zollinger-Ellison</b> = gastrinoma."
+  ],
+  "agudo": [
+   "<b>Apendicitis:</b> dolor periumbilical que migra a FID (McBurney) + anorexia. Signos: Blumberg, Rovsing, Dunphy, Aaron; psoas y obturador si es retrocecal.",
+   "<b>Alvarado:</b> 10 puntos (2 por dolor en FID y 2 por leucocitosis); ≥ 7 = probable. Complicación más grave: peritonitis; más frecuente: infección de la herida.",
+   "<b>Obstrucción mecánica:</b> adherencias (1.ª en operados), hernias (1.ª en no operados); en el colon, el cáncer. <b>Íleo paralítico:</b> funcional, típico del postoperatorio.",
+   "<b>Manejo:</b> dieta absoluta, SNG para descomprimir, sueroterapia, control de diuresis y analgesia.",
+   "<b>Peritonitis:</b> abdomen en tabla, ruidos disminuidos, fiebre y riesgo de shock.",
+   "<b>Vólvulo</b> = torsión con estrangulación · ángulo esplénico = zona frontera de isquemia · <b>Kehr</b> = dolor en el hombro izquierdo en la rotura esplénica."
+  ],
+  "intestino": [
+   "<b>Colitis ulcerosa:</b> recto, continua, mucosa, rectorragia, el tabaco protege, megacolon tóxico, cirugía curativa.",
+   "<b>Crohn:</b> de la boca al ano (íleon terminal), transmural, segmentaria, fístulas y afectación perianal, granulomas, el tabaco empeora.",
+   "<b>Montreal:</b> CU por extensión (E1-E3) y gravedad (S0-S3) · Crohn por edad (A), localización (L) y comportamiento (B).",
+   "<b>Bristol:</b> 1-2 estreñimiento · 3-4 ideal · 5 falta de fibra · 6-7 diarrea. Estreñimiento = menos de 3 deposiciones/semana.",
+   "<b>Diarrea secretora</b> (no cede con el ayuno, osmolaridad normal) vs <b>osmótica</b> (cede con el ayuno, pH ácido).",
+   "<b>Cribado del CCR:</b> 50-69 años (ampliándose a 74), FIT cada 2 años, colonoscopia si es positivo = prevención SECUNDARIA. Diverticulosis → fibra; diverticulitis → dieta absoluta, sin colonoscopia en fase aguda."
+  ],
+  "higado": [
+   "<b>Cirrosis:</b> VHC y alcohol (80 %). Hipertensión portal → varices, ascitis, esplenomegalia y circulación colateral.",
+   "<b>Encefalopatía:</b> West Haven 0-4; asterixis. Desencadenantes: hemorragia, estreñimiento, infecciones, sedantes. Lactulosa. Dieta hipercalórica e HIPERproteica (la hipoproteica está obsoleta).",
+   "<b>Ascitis:</b> dieta sin sal, espironolactona + furosemida, peso y perímetro diarios. <b>Paracentesis:</b> vaciar la vejiga, punción en el lado izquierdo, vigilar la TA, albúmina desde el 5.º litro.",
+   "<b>Varices sangrantes:</b> estabilizar, somatostatina o terlipresina + ligadura endoscópica; Sengstaken como puente.",
+   "<b>Child-Pugh</b> (bilirrubina, albúmina, TP, ascitis, encefalopatía) · <b>MELD</b> (creatinina, bilirrubina, INR).",
+   "<b>Bilirrubina indirecta:</b> liposoluble, por hemólisis, no pasa a la orina. <b>Directa:</b> hidrosoluble, coluria. AINE contraindicados en la cirrosis."
+  ],
+  "bilipan": [
+   "<b>Colelitiasis:</b> cálculos de colesterol (75 %); cólico irradiado al hombro derecho; la ecografía es la prueba de elección.",
+   "<b>Colecistitis:</b> cálculo en el cístico; dolor + fiebre + leucocitosis; signo de <b>Murphy</b>.",
+   "<b>Colangitis:</b> tríada de <b>Charcot</b> (dolor, fiebre, ictericia) → con shock y confusión, pentada de <b>Reynolds</b>.",
+   "<b>Tubo de Kehr:</b> bolsa por DEBAJO del punto de inserción, registrar el débito, pinzar antes y después de las comidas.",
+   "<b>Pancreatitis aguda:</b> litiasis (1.ª), alcohol (2.ª); dolor en cinturón que mejora inclinándose hacia delante; amilasa ×3, la lipasa es más específica; Cullen y Grey-Turner = gravedad.",
+   "<b>Atlanta</b> (gravedad) · <b>Ranson</b> (pronóstico, sin amilasa) · <b>Courvoisier-Terrier</b>: vesícula palpable indolora + ictericia → cabeza de páncreas (Whipple)."
+  ],
+  "valor": [
+   "<b>Exploración:</b> inspección → auscultación → percusión → palpación (auscultar ANTES de palpar). Ausencia de ruidos = nada en 3-5 min.",
+   "<b>Melena</b> (negra, pegajosa, fétida; origen alto) · <b>hematoquecia</b> (roja con las heces) · <b>rectorragia</b> (sangre fresca) · <b>hematemesis</b> (vómito; «posos de café» = sangre digerida).",
+   "<b>Heces acólicas</b> → obstrucción biliar o hepatitis · <b>esteatorrea</b> → test de Van de Kamer.",
+   "<b>Sangre oculta:</b> hoy FIT (inmunoquímico), sin dieta; esperar 3 días sin sangrado si hay regla o hemorroides. Guayaco = obsoleto (la vitamina C daba falsos negativos).",
+   "<b>Colonoscopia:</b> dieta pobre en residuos 48 h, líquidos claros 24 h, decúbito lateral izquierdo con las rodillas flexionadas; con sedación debe ir acompañado.",
+   "<b>HDA:</b> primera causa la úlcera péptica; estabilizar antes de la endoscopia. <b>Vómito central</b> «en escopetazo»: sin náuseas ni esfuerzo."
+  ],
+  "sondas": [
+   "<b>Levin</b> 1 luz · <b>Salem</b> 2 luces (aspiración) · <b>Foucher/Ewald</b> orogástricas gruesas (lavado) · <b>Sengstaken</b> 3 vías y 2 balones · <b>Minnesota</b> 4 vías · <b>Linton</b> 1 balón.",
+   "<b>Inserción:</b> Fowler, medida NEX (nariz → lóbulo de la oreja → xifoides), técnica limpia (no estéril), flexionar el cuello al avanzar.",
+   "<b>Verificación:</b> radiografía (referencia) y pH ≤ 4 a pie de cama. NUNCA auscultación de aire ni burbujas en agua.",
+   "<b>Contraindicaciones:</b> cáusticos, perforación u obstrucción esofágica, fractura facial o de la base del cráneo (→ vía oral).",
+   "<b>Retirada:</b> Fowler, lavar, PINZAR y retirar en inspiración mantenida. Fijación: cambiarla a diario.",
+   "<b>Enema:</b> Sims (decúbito lateral izquierdo), unos 40 °C, irrigador a 30-45 cm, sonda 7,5-10 cm en el adulto. Harris = gases. <b>Lavado gástrico:</b> decúbito lateral izquierdo + Trendelenburg."
+  ],
+  "ostom": [
+   "<b>Heces:</b> ciego líquidas → ascendente semilíquidas → transverso blandas → descendente semiblandas → sigma SÓLIDAS.",
+   "<b>Marcaje</b> preoperatorio sobre el músculo recto anterior; ileostomía en FID y sigmoidea en FII. La colostomía empieza a funcionar a los 3-6 días.",
+   "<b>Cuidados:</b> agua tibia y jabón neutro, sin frotar, secar sin secador; orificio unos 3 mm mayor que el estoma; medirlo en cada cambio las primeras semanas; vaciar la bolsa a 1/3-1/2.",
+   "<b>Complicaciones precoces</b> (sangrado, edema, necrosis, dehiscencia) vs <b>tardías</b> (estenosis, retracción, prolapso, hernia, granuloma).",
+   "<b>Irrigación:</b> solo en descendentes o sigmoideas, agua a 37 °C, 500-1500 ml. <b>Kock</b> = ileostomía continente · <b>Paul-Mikulicz</b> = doble boca «en cañón de escopeta».",
+   "<b>PEG:</b> si la nutrición enteral va a durar más de 4-6 semanas; girarla a diario; balón con agua destilada (5-10 ml) cada 1-2 semanas; si sale antes de 2-3 semanas → hospital; lavar con 30 ml de agua."
+  ]
+ },
+ "escalas": [
+  [
+   "Jorge-Wexner",
+   "Escalas y test",
+   "Valora la severidad de la incontinencia fecal (la más usada).",
+   "Puntúa la frecuencia de escapes de gas, líquido o sólido, el uso de compresas y la afectación de la vida diaria."
+  ],
+  [
+   "FIQL",
+   "Escalas y test",
+   "Valora la calidad de vida del paciente con incontinencia fecal.",
+   "Fecal Incontinence Quality of Life Scale."
+  ],
+  [
+   "RAFIS",
+   "Escalas y test",
+   "Evalúa rápidamente la gravedad de la incontinencia fecal.",
+   "Rapid Assessment Faecal Incontinence Score: propuesta por un grupo español de cirugía colorrectal."
+  ],
+  [
+   "LARS",
+   "Escalas y test",
+   "Evalúa la función intestinal tras una resección rectal anterior.",
+   "Low Anterior Resection Score (Emmertsen, 2012), validada en español."
+  ],
+  [
+   "Cuestionario de Montreux",
+   "Escalas y test",
+   "Valora la calidad de vida del paciente ostomizado.",
+   "Junto con Estoma QoL y SF-36, es una encuesta de calidad de vida del ostomizado."
+  ],
+  [
+   "CVE-20",
+   "Escalas y test",
+   "Valora la calidad de vida en el estreñimiento.",
+   "20 ítems y 4 dimensiones (emocional, física general, física rectal y social). Cada ítem va de 0 (siempre) a 4 (nunca): 0 = peor calidad de vida."
+  ],
+  [
+   "Escala de Bristol",
+   "Escalas y test",
+   "Valora la consistencia de las heces (tipos 1 a 7).",
+   "1-2 estreñimiento · 3-4 ideales (la 4 es la mejor) · 5 falta de fibra · 6-7 diarrea."
+  ],
+  [
+   "Escala de Alvarado",
+   "Escalas y test",
+   "Estima la probabilidad de apendicitis aguda (0-10 puntos).",
+   "El dolor en FID y la leucocitosis puntúan 2. 0-4 negativa · 5-6 posible · 7-8 probable · 9-10 apendicitis."
+  ],
+  [
+   "MECV-V",
+   "Escalas y test",
+   "Detecta la disfagia orofaríngea valorando la seguridad y la eficacia.",
+   "Bolos de 5, 10 y 20 ml: néctar → líquido → pudin. Seguridad: tos, cambio de voz, desaturación ≥ 3 %."
+  ],
+  [
+   "EAT-10",
+   "Escalas y test",
+   "Cribado autoadministrado de la disfagia.",
+   "10 preguntas, Likert 0-4, total 0-40; ≥ 3 = posible disfagia. Requiere cognición conservada."
+  ],
+  [
+   "IDDSI",
+   "Escalas y test",
+   "Estándar internacional de texturas para personas con disfagia.",
+   "8 niveles (0-7) en 2 pirámides que se cruzan: líquidos y alimentos."
+  ],
+  [
+   "Test de Van de Kamer",
+   "Escalas y test",
+   "Cuantifica la grasa en las heces (esteatorrea).",
+   "Recogida de heces de 72 h con dieta controlada en grasas."
+  ],
+  [
+   "Índice CAOD",
+   "Escalas y test",
+   "Mide la caries en la dentición permanente.",
+   "(Cariados + Ausentes + Obturados) / n.º de individuos; se suele medir a los 12 años."
+  ],
+  [
+   "Índice cod",
+   "Escalas y test",
+   "Mide la caries en la dentición temporal.",
+   "No cuenta las ausencias, que pueden deberse a la exfoliación fisiológica."
+  ],
+  [
+   "Child-Pugh",
+   "Escalas y test",
+   "Valora la gravedad y el pronóstico de la cirrosis.",
+   "Bilirrubina, albúmina, tiempo de protrombina, ascitis y encefalopatía → clases A, B y C."
+  ],
+  [
+   "MELD",
+   "Escalas y test",
+   "Prioriza a los pacientes para el trasplante hepático.",
+   "Usa la creatinina, la bilirrubina y el INR."
+  ],
+  [
+   "West Haven",
+   "Escalas y test",
+   "Gradúa la encefalopatía hepática (0-4).",
+   "I: euforia, atención reducida · II: letargia, desorientación · III: estupor · IV: coma."
+  ],
+  [
+   "Truelove-Witts",
+   "Escalas y test",
+   "Valora la actividad (gravedad del brote) de la colitis ulcerosa.",
+   "Grave: 6 o más deposiciones con sangre, fiebre, taquicardia, anemia y VSG elevada."
+  ],
+  [
+   "CDAI",
+   "Escalas y test",
+   "Valora la actividad de la enfermedad de Crohn.",
+   "Crohn's Disease Activity Index."
+  ],
+  [
+   "Criterios de Ranson",
+   "Escalas y test",
+   "Estiman el pronóstico de la pancreatitis aguda.",
+   "Al ingreso: edad, leucocitos, glucemia, LDH y AST. La amilasa NO puntúa."
+  ],
+  [
+   "Arts y Sigstad",
+   "Escalas y test",
+   "Valoran los síntomas del síndrome de dumping.",
+   "Sistemas de puntuación del vaciamiento gástrico rápido tras la cirugía gástrica."
+  ],
+  [
+   "Clasificación de Montreal (CU)",
+   "Clasificaciones",
+   "Clasifica la colitis ulcerosa por extensión y gravedad.",
+   "E1 proctitis · E2 colitis izquierda · E3 extensa; gravedad S0-S3."
+  ],
+  [
+   "Clasificación de Montreal (Crohn)",
+   "Clasificaciones",
+   "Clasifica el Crohn por edad al diagnóstico, localización y comportamiento.",
+   "A1-A3 · L1-L4 · B1 inflamatorio, B2 estenosante, B3 fistulizante (+ «p» si es perianal)."
+  ],
+  [
+   "Clasificación de Hinchey",
+   "Clasificaciones",
+   "Estadifica la diverticulitis y sus complicaciones (absceso, peritonitis).",
+   "Guía el tratamiento de la diverticulitis complicada y no complicada."
+  ],
+  [
+   "Clasificación de Atlanta",
+   "Clasificaciones",
+   "Estratifica la gravedad de la pancreatitis aguda.",
+   "Leve, moderadamente grave o grave; por fases: temprana o tardía."
+  ],
+  [
+   "Astler-Coller / Dukes",
+   "Clasificaciones",
+   "Estadiaje pronóstico del cáncer colorrectal.",
+   "A: mucosa · B: pared sin ganglios (B3 invade órganos vecinos) · C: con ganglios."
+  ],
+  [
+   "Hernia de hiato tipo I",
+   "Clasificaciones",
+   "Hernia por deslizamiento: la más frecuente (> 90 %) y asociada al reflujo.",
+   "Tipo II paraesofágica (cirugía) · III mixta · IV con otras vísceras."
+  ],
+  [
+   "Signo de Blumberg",
+   "Signos",
+   "Dolor a la descompresión brusca: irritación peritoneal.",
+   "En la FID orienta a apendicitis."
+  ],
+  [
+   "Signo de Rovsing",
+   "Signos",
+   "Al presionar la FII aparece dolor en la FID: apendicitis.",
+   "Los gases se desplazan hacia el ciego y lo distienden."
+  ],
+  [
+   "Signo de Dunphy",
+   "Signos",
+   "Aumenta el dolor en McBurney al toser: apendicitis.",
+   ""
+  ],
+  [
+   "Signo de Aaron",
+   "Signos",
+   "Al presionar McBurney aparece dolor epigástrico o precordial: apendicitis.",
+   ""
+  ],
+  [
+   "Signo del psoas (Cope)",
+   "Signos",
+   "Dolor en la FID con la extensión o flexión de la cadera derecha: apendicitis retrocecal.",
+   "Paciente en decúbito lateral izquierdo extendiendo la pierna derecha hacia atrás."
+  ],
+  [
+   "Signo del obturador (Cope)",
+   "Signos",
+   "Dolor hipogástrico al flexionar y rotar hacia dentro la cadera derecha: apendicitis retrocecal o pélvica.",
+   ""
+  ],
+  [
+   "Signo de Murphy",
+   "Signos",
+   "Se interrumpe la inspiración al palpar el hipocondrio derecho: colecistitis aguda.",
+   ""
+  ],
+  [
+   "Signo de Cullen",
+   "Signos",
+   "Equimosis azulada periumbilical: pancreatitis necrotizante o hemorrágica.",
+   "Infrecuente, pero indica gravedad."
+  ],
+  [
+   "Signo de Grey-Turner",
+   "Signos",
+   "Equimosis azulada en los flancos: pancreatitis necrotizante o hemorrágica.",
+   "Infrecuente, pero indica gravedad."
+  ],
+  [
+   "Signo de Courvoisier-Terrier",
+   "Signos",
+   "Vesícula palpable e indolora con ictericia: tumor de la cabeza del páncreas o periampular.",
+   ""
+  ],
+  [
+   "Signo de Kehr",
+   "Signos",
+   "Dolor referido al hombro izquierdo: rotura esplénica.",
+   "La sangre irrita el diafragma (nervio frénico)."
+  ],
+  [
+   "Asterixis (flapping)",
+   "Signos",
+   "Temblor aleteante de las manos en extensión: encefalopatía hepática.",
+   "Gesto de «detener el tráfico»."
+  ],
+  [
+   "Signo de Trousseau",
+   "Signos",
+   "Espasmo carpiano al inflar el manguito: hipocalcemia (por ejemplo, en la pancreatitis).",
+   ""
+  ],
+  [
+   "Punto de McBurney",
+   "Signos",
+   "Unión del tercio externo con los dos tercios internos de la línea ombligo-EIAS derecha.",
+   "Proyección de la base del apéndice."
+  ],
+  [
+   "Tríada de Charcot",
+   "Tríadas",
+   "Dolor cólico + fiebre + ictericia: colangitis aguda.",
+   ""
+  ],
+  [
+   "Pentada de Reynolds",
+   "Tríadas",
+   "Charcot + shock + confusión mental: colangitis grave.",
+   "Más frecuente en ancianos."
+  ],
+  [
+   "Tríada de la colecistitis",
+   "Tríadas",
+   "Dolor brusco en hipocondrio derecho + fiebre + leucocitosis.",
+   ""
+  ],
+  [
+   "Maniobra de Masako",
+   "Maniobras de deglución",
+   "Tragar saliva con la lengua sujeta entre los dientes: fortalece la pared faríngea posterior.",
+   ""
+  ],
+  [
+   "Maniobra de Mendelsohn",
+   "Maniobras de deglución",
+   "Mantener la laringe elevada 2-3 s al tragar: mejora la apertura del EES.",
+   ""
+  ],
+  [
+   "Deglución supersupraglótica",
+   "Maniobras de deglución",
+   "Inspirar, retener el aire, tragar con fuerza y toser: protege la vía aérea.",
+   ""
+  ],
+  [
+   "Deglución forzada",
+   "Maniobras de deglución",
+   "Tragar apretando fuerte todos los músculos: aumenta la propulsión del bolo.",
+   ""
+  ],
+  [
+   "Sonda de Levin",
+   "Sondas",
+   "Nasogástrica de 1 luz: aspiración, lavado, nutrición y muestras.",
+   "14-18 Fr en adultos."
+  ],
+  [
+   "Sonda de Salem",
+   "Sondas",
+   "Nasogástrica de 2 luces (una de aire): aspiración sin succionar la mucosa.",
+   ""
+  ],
+  [
+   "Sonda de Foucher / Ewald",
+   "Sondas",
+   "Orogástrica de gran calibre: lavado gástrico.",
+   ""
+  ],
+  [
+   "Sonda de Sengstaken-Blakemore",
+   "Sondas",
+   "3 vías y 2 balones: varices esofágicas sangrantes.",
+   "Balón gástrico 200-250 ml; esofágico con aire a presión controlada."
+  ],
+  [
+   "Sonda de Minnesota",
+   "Sondas",
+   "4 vías y 2 balones: Sengstaken con aspiración esofágica.",
+   ""
+  ],
+  [
+   "Sonda de Linton-Nachlas",
+   "Sondas",
+   "3 vías y un único balón gástrico: varices fúndicas.",
+   ""
+  ],
+  [
+   "Sonda de Miller-Abbott",
+   "Sondas",
+   "Nasoentérica de 2 luces con globo: descompresión intestinal.",
+   ""
+  ],
+  [
+   "Sonda de Cantor / Harris",
+   "Sondas",
+   "Nasoentérica de 1 luz con reservorio de mercurio (en desuso).",
+   ""
+  ],
+  [
+   "Sonda Freka / Nutrisoft",
+   "Sondas",
+   "Finas y flexibles: nutrición enteral prolongada.",
+   ""
+  ],
+  [
+   "Sonda de Plummer",
+   "Sondas",
+   "Dilata estenosis esofágicas (no sirve para alimentar).",
+   ""
+  ],
+  [
+   "Tubo de Kehr (en T)",
+   "Sondas",
+   "Drenaje biliar tras explorar el colédoco.",
+   "Bolsa por debajo del punto de inserción; pinzar antes y después de las comidas."
+  ]
+ ],
+ "conceptos": {
+  "heces_ostomia": "Heces según el tipo de ostomía",
+  "sng_verif": "Verificar la posición de la SNG",
+  "lavado": "Lavado gástrico y carbón activado",
+  "sondas_tipos": "Tipos de sondas",
+  "peg": "Gastrostomía (PEG) y fármacos por sonda",
+  "sng": "SNG y nutrición enteral",
+  "enemas": "Enemas y fecalomas",
+  "irrigacion": "Irrigación de la colostomía",
+  "ostomias": "Tipos y cuidados de las ostomías",
+  "charcot": "Colangitis y tríada de Charcot",
+  "biliar": "Colecistitis, colelitiasis y Kehr",
+  "pancreas": "Pancreatitis y páncreas",
+  "encefalo": "Encefalopatía hepática",
+  "cirrosis": "Cirrosis, ascitis y varices",
+  "dumping": "Gastrectomía, dumping y B12",
+  "ulcera": "Úlcera péptica y H. pylori",
+  "erge": "ERGE, hernia de hiato y esófago",
+  "disfagia": "Disfagia y deglución",
+  "bucal": "Salud bucodental",
+  "eii": "Crohn y colitis ulcerosa",
+  "ccr": "Cribado y cáncer colorrectal",
+  "apendic": "Apendicitis y signos abdominales",
+  "obstruccion": "Obstrucción, íleo y abdomen agudo",
+  "hemorragia": "Hemorragia digestiva",
+  "eliminacion": "Estreñimiento, diarrea e incontinencia",
+  "valoracion": "Síntomas y pruebas diagnósticas",
+  "anatomia": "Anatomía y fisiología"
+ },
+ "trampas": [
+  {
+   "id": "cabecero",
+   "t": "Cabecero, no pies",
+   "engano": "Cambian «elevar el cabecero» por «elevar los pies» o hablan de grados en vez de centímetros.",
+   "regla": "En la ERGE se eleva el CABECERO 15-20 cm con tacos (no con almohadas), no se acuesta en las 3 h tras comer y no duerme sobre el lado derecho."
+  },
+  {
+   "id": "posiciones",
+   "t": "Fowler para la SNG, Sims para el enema",
+   "engano": "Intercambian las posiciones de cada técnica: Sims para la SNG, lateral derecho para el enema...",
+   "regla": "SNG: Fowler (≥ 45°) con el cuello flexionado. Enema y colonoscopia: Sims o decúbito lateral IZQUIERDO. Lavado gástrico: lateral izquierdo + Trendelenburg. Nutrición por sonda: semi-Fowler."
+  },
+  {
+   "id": "verificacion",
+   "t": "pH sí, auscultación no",
+   "engano": "Proponen la auscultación del aire insuflado, las burbujas en agua o la ausencia de tos como métodos fiables.",
+   "regla": "Referencia: radiografía. A pie de cama: aspirar y medir el pH (≤ 4 = estómago). La auscultación NO es fiable."
+  },
+  {
+   "id": "distal",
+   "t": "Cuanto más distal, más sólida",
+   "engano": "Mezclan la consistencia de las heces entre tramos (por ejemplo, «colostomía izquierda: heces líquidas»).",
+   "regla": "Ciego: líquidas → ascendente: semilíquidas → transverso: blandas → descendente: semiblandas → sigma: sólidas. Las proximales son más irritantes."
+  },
+  {
+   "id": "cucrohn",
+   "t": "Colitis ulcerosa ≠ Crohn",
+   "engano": "Atribuyen a la CU rasgos del Crohn (transmural, segmentaria, de boca a ano, granulomas, fístulas) o al revés.",
+   "regla": "CU: recto, continua, mucosa, rectorragia, megacolon tóxico, el tabaco protege. Crohn: íleon terminal, transmural, en parches, fístulas y afectación perianal, el tabaco empeora."
+  },
+  {
+   "id": "ulceradolor",
+   "t": "La duodenal se calma comiendo",
+   "engano": "Cambian la relación del dolor con la comida o lo sitúan en el hipogastrio.",
+   "regla": "Duodenal: dolor 1,5-3 h tras comer, CEDE con la comida, nocturno. Gástrica: 20-30 min, no cede. Ambas son epigástricas."
+  },
+  {
+   "id": "balones",
+   "t": "Sengstaken 3 vías, Minnesota 4",
+   "engano": "Confunden el número de vías y balones de las sondas de taponamiento.",
+   "regla": "Sengstaken-Blakemore: 3 vías y 2 balones. Minnesota: 4 vías (añade aspiración esofágica). Linton-Nachlas: 3 vías y 1 balón gástrico."
+  },
+  {
+   "id": "lavado",
+   "t": "Para lavar, sondas gruesas por la boca",
+   "engano": "Ofrecen sondas finas, de nutrición o de taponamiento para el lavado gástrico.",
+   "regla": "Lavado gástrico: Foucher/Ewald (orogástricas gruesas). Sengstaken, Freka o Miller-Abbott NO sirven para lavar. Faucher no sirve para alimentar."
+  },
+  {
+   "id": "alimentacion",
+   "t": "Ostomías: ¿alimentan o eliminan?",
+   "engano": "Cuelan una yeyunostomía o una gastrostomía entre las ostomías de eliminación.",
+   "regla": "Nutrición: faringostomía, esofagostomía, gastrostomía, yeyunostomía. Eliminación: ileostomía, colostomía, urostomía o ureterostomía."
+  },
+  {
+   "id": "charcot",
+   "t": "Charcot es colangitis, no colecistitis",
+   "engano": "Atribuyen la tríada de Charcot a la colecistitis o la colelitiasis.",
+   "regla": "Charcot (dolor + fiebre + ictericia) = colangitis; con shock y confusión = Reynolds. Colecistitis = dolor + fiebre + leucocitosis + Murphy."
+  },
+  {
+   "id": "disfagia",
+   "t": "Disfagia: girar, no inclinar; sin pajitas",
+   "engano": "Proponen pajitas, texturas mixtas o inclinar la cabeza hacia el lado afectado.",
+   "regla": "Barbilla al pecho; en hemiplejia, GIRAR la cabeza hacia el lado afectado; espesantes; evitar pajitas, jeringas y dobles texturas."
+  },
+  {
+   "id": "encefalo",
+   "t": "Encefalopatía: proteínas sí, estreñimiento no",
+   "engano": "Proponen dieta hipoproteica o una dieta astringente.",
+   "regla": "Hoy: dieta hipercalórica e HIPERproteica (ESPEN) y evitar el estreñimiento (lactulosa). El estreñimiento es un desencadenante, no un síntoma."
+  },
+  {
+   "id": "b12",
+   "t": "Sin estómago no hay B12",
+   "engano": "Ofrecen vitaminas liposolubles o del grupo B distintas de la B12.",
+   "regla": "El factor intrínseco (células parietales) es necesario para absorber la B12 en el íleon terminal → B12 intramuscular de por vida tras la gastrectomía."
+  },
+  {
+   "id": "contraindica",
+   "t": "Indicación ≠ contraindicación de la SNG",
+   "engano": "Presentan como indicación una contraindicación (esófago perforado, cáusticos).",
+   "regla": "Contraindicaciones: cáusticos, perforación u obstrucción esofágica, fractura facial o de la base del cráneo. El bajo nivel de conciencia no es absoluta (se protege antes la vía aérea)."
+  }
+ ],
+ "casos": [
+  {
+   "id": "carmen",
+   "s": "boca",
+   "t": "Carmen y el vaso de agua",
+   "intro": "Carmen, 78 años, ingresa por un ictus con hemiparesia IZQUIERDA. Está consciente y orientada. Al ofrecerle agua, tose.",
+   "q": [
+    {
+     "q": "Carmen conserva la cognición. ¿Qué herramienta de cribado autoadministrada utilizarías?",
+     "o": [
+      "EAT-10",
+      "MNA",
+      "Escala de Bristol",
+      "Índice de Barthel"
+     ],
+     "a": 0,
+     "e": "El EAT-10 es un cuestionario autoadministrado de 10 preguntas (0-40 puntos); un resultado ≥ 3 indica riesgo de disfagia. El MNA valora la nutrición, Bristol las heces y Barthel las actividades básicas."
+    },
+    {
+     "q": "Realizas el MECV-V. ¿Con qué bolo empiezas?",
+     "o": [
+      "5 ml de viscosidad néctar",
+      "5 ml de líquido",
+      "20 ml de pudin",
+      "10 ml de líquido"
+     ],
+     "a": 0,
+     "e": "Se empieza por la viscosidad intermedia (néctar) y el menor volumen (5 ml) para proteger al paciente, y se avanza a 10 y 20 ml si la deglución es segura."
+    },
+    {
+     "q": "Con 10 ml de néctar, Carmen tose y su saturación baja del 96 % al 92 %. ¿Qué haces?",
+     "o": [
+      "Pasar a la viscosidad pudin, saltándote la líquida",
+      "Pasar a 5 ml de líquido",
+      "Repetir 10 ml de néctar",
+      "Terminar la prueba: dieta absoluta"
+     ],
+     "a": 0,
+     "e": "La tos y una desaturación ≥ 3 % son alteraciones de la SEGURIDAD: no se pasa al líquido, se salta directamente a pudin. Solo si también falla con pudin se da por finalizada la exploración."
+    },
+    {
+     "q": "Para las comidas, ¿qué indicación postural le das?",
+     "o": [
+      "Sentada a 90°, barbilla al pecho y cabeza GIRADA hacia el lado izquierdo",
+      "Inclinar la cabeza hacia el lado izquierdo",
+      "Tumbada a 30° con el cuello en extensión",
+      "Beber con pajita para controlar el volumen"
+     ],
+     "a": 0,
+     "e": "En la hemiparesia se rota la cabeza hacia el lado AFECTADO: así el bolo pasa por el lado sano. Inclinarla, extender el cuello o usar pajitas aumenta el riesgo de aspiración."
+    }
+   ]
+  },
+  {
+   "id": "antonio",
+   "s": "higado",
+   "t": "Antonio, cirrosis descompensada",
+   "intro": "Antonio, 58 años, tiene una cirrosis de origen alcohólico. Ingresa por aumento del perímetro abdominal, oliguria y 4 kg más en una semana.",
+   "q": [
+    {
+     "q": "¿Qué control diario es el más útil para seguir su ascitis?",
+     "o": [
+      "Peso y perímetro abdominal",
+      "Glucemia capilar",
+      "Temperatura",
+      "Amilasa sérica"
+     ],
+     "a": 0,
+     "e": "El peso y el perímetro abdominal diarios (junto con la diuresis) reflejan la evolución de la ascitis y la respuesta a los diuréticos y a la dieta sin sal."
+    },
+    {
+     "q": "Se le realiza una paracentesis evacuadora de 7 litros. ¿Qué es correcto?",
+     "o": [
+      "Vaciar la vejiga, puncionar en el lado izquierdo, vigilar la TA y reponer albúmina",
+      "Puncionar en el lado derecho",
+      "Si se extraen más de 5 l no hace falta albúmina",
+      "Colocarle en decúbito prono"
+     ],
+     "a": 0,
+     "e": "Antes de puncionar se vacía la vejiga; se punciona en el lado izquierdo (evitando el hígado), se vigila la hipotensión y, a partir del 5.º litro, se repone albúmina (10 g por cada 1,5 l extraídos)."
+    },
+    {
+     "q": "Al tercer día vomita sangre roja abundante; TA 85/50. ¿Qué haces PRIMERO?",
+     "o": [
+      "Canalizar dos vías gruesas y reponer la volemia",
+      "Colocar ya una sonda de Levin",
+      "Darle suero oral",
+      "Hacer la endoscopia sin estabilizarle"
+     ],
+     "a": 0,
+     "e": "La prioridad es la estabilización hemodinámica. Después: somatostatina o terlipresina y endoscopia con ligadura. La Sengstaken-Blakemore es un puente si fracasa lo anterior."
+    },
+    {
+     "q": "Días después está desorientado en el tiempo, letárgico y con flapping. ¿Qué es INCORRECTO?",
+     "o": [
+      "Pautar una dieta hipoproteica estricta",
+      "Lactulosa hasta lograr 2-3 deposiciones blandas",
+      "Buscar desencadenantes (hemorragia, estreñimiento, infección)",
+      "Evitar las benzodiacepinas"
+     ],
+     "a": 0,
+     "e": "Es una encefalopatía de grado II (West Haven). Hoy NO se restringen las proteínas (ESPEN): la dieta es hipercalórica e hiperproteica. Se usa lactulosa, se corrigen los desencadenantes y se evitan los sedantes."
+    }
+   ]
+  },
+  {
+   "id": "laura",
+   "s": "agudo",
+   "t": "Laura y el dolor que migra",
+   "intro": "Laura, 22 años, consulta por un dolor que empezó alrededor del ombligo hace 8 horas y ahora está en la fosa iliaca derecha. Tiene náuseas, no tiene hambre y está a 38,2 °C.",
+   "q": [
+    {
+     "q": "Al presionar la fosa iliaca IZQUIERDA le duele la derecha. ¿Qué signo es?",
+     "o": [
+      "Rovsing",
+      "Murphy",
+      "Blumberg",
+      "Cullen"
+     ],
+     "a": 0,
+     "e": "Rovsing: la presión en la FII desplaza los gases hacia el ciego y despierta dolor en la FID. Murphy = colecistitis; Blumberg = dolor al descomprimir; Cullen = equimosis periumbilical."
+    },
+    {
+     "q": "Tiene migración del dolor, anorexia, náuseas, dolor en FID, 38,2 °C, 14.000 leucocitos y 80 % de neutrófilos, sin rebote. ¿Qué puntuación de Alvarado obtiene?",
+     "o": [
+      "9: apendicitis",
+      "7: probable",
+      "5: posible",
+      "10: apendicitis"
+     ],
+     "a": 0,
+     "e": "Migración 1 + anorexia 1 + náuseas 1 + dolor en FID 2 + fiebre 1 + leucocitosis 2 + desviación izquierda 1 = 9 (sin rebote). 9-10 puntos = apendicitis."
+    },
+    {
+     "q": "Mientras espera la cirugía, ¿qué NO harías?",
+     "o": [
+      "Aplicar un enema y calor local para aliviarla",
+      "Dieta absoluta",
+      "Vía venosa y analgesia pautada",
+      "Profilaxis antibiótica según protocolo"
+     ],
+     "a": 0,
+     "e": "En el abdomen agudo están contraindicados los enemas y los laxantes (riesgo de perforación). Lo indicado es dieta absoluta, vía venosa, analgesia y profilaxis antibiótica."
+    },
+    {
+     "q": "Tras la apendicectomía, ¿cuál es la complicación MÁS FRECUENTE?",
+     "o": [
+      "Infección de la herida quirúrgica",
+      "Peritonitis difusa",
+      "Pileflebitis",
+      "Obstrucción por bridas"
+     ],
+     "a": 0,
+     "e": "La complicación más frecuente es la infección de la herida; la más GRAVE es la peritonitis por perforación."
+    }
+   ]
+  },
+  {
+   "id": "jose",
+   "s": "ostom",
+   "t": "José estrena colostomía",
+   "intro": "José, 65 años, va a ser intervenido de un cáncer de recto: se le hará una colostomía terminal sigmoidea definitiva.",
+   "q": [
+    {
+     "q": "En la consulta preoperatoria, ¿dónde marcas el estoma?",
+     "o": [
+      "Fosa iliaca izquierda, sobre el recto anterior, comprobándolo de pie, sentado y tumbado",
+      "Sobre la línea de la cintura",
+      "En la fosa iliaca derecha",
+      "Sobre la cicatriz de una cirugía previa"
+     ],
+     "a": 0,
+     "e": "El marcaje es tarea enfermera: sobre el músculo recto anterior (menos hernias y prolapsos), en el lado del colon abocado y evitando cintura, pliegues, cicatrices y prominencias óseas."
+    },
+    {
+     "q": "¿Cómo serán sus heces cuando coma con normalidad?",
+     "o": [
+      "Sólidas y poco irritantes",
+      "Líquidas y continuas",
+      "Semilíquidas e irritantes",
+      "Blandas"
+     ],
+     "a": 0,
+     "e": "En el sigma el colon ya ha absorbido el agua: las heces son sólidas y poco irritantes, y la evacuación puede regularse."
+    },
+    {
+     "q": "Para cambiar el dispositivo, ¿qué es correcto?",
+     "o": [
+      "Despegar de arriba abajo, lavar con agua tibia y jabón neutro, secar a toques y recortar el orificio unos 3 mm mayor que el estoma",
+      "Desinfectar el estoma con povidona yodada",
+      "Secar con secador para que pegue mejor",
+      "Recortar el orificio 1 cm mayor para que no roce"
+     ],
+     "a": 0,
+     "e": "Sin desinfectantes ni secador. El orificio debe ajustarse (unos 3 mm mayor): si queda grande, las heces contactan con la piel y la irritan."
+    },
+    {
+     "q": "Meses después pregunta por la irrigación. ¿Qué le dices?",
+     "o": [
+      "Es una opción en su colostomía si su tránsito es regular: agua a unos 37 °C, siempre a la misma hora",
+      "Está contraindicada en las colostomías sigmoideas",
+      "Se hace con agua fría para estimular el colon",
+      "El cono debe introducirse al menos 15 cm"
+     ],
+     "a": 0,
+     "e": "La irrigación está indicada en colostomías descendentes o sigmoideas sin complicaciones: 500-1500 ml de agua a temperatura corporal, durante 10-15 min, con el cono nunca a más de 8 cm."
+    }
+   ]
+  },
+  {
+   "id": "rosa",
+   "s": "bilipan",
+   "t": "Rosa y la vesícula",
+   "intro": "Rosa, 45 años, con obesidad, consulta por dolor en el hipocondrio derecho irradiado al hombro derecho tras una comida copiosa, que cede en 3 horas.",
+   "q": [
+    {
+     "q": "¿Cuál es la prueba de imagen de elección?",
+     "o": [
+      "Ecografía abdominal",
+      "Radiografía simple",
+      "Colonoscopia",
+      "Tránsito baritado"
+     ],
+     "a": 0,
+     "e": "La ecografía es la prueba de elección para la litiasis biliar; la radiografía simple sirve de poco porque pocos cálculos son radiopacos."
+    },
+    {
+     "q": "Una semana después tiene fiebre con escalofríos, ictericia y dolor en el hipocondrio derecho. ¿Qué sospechas?",
+     "o": [
+      "Colangitis aguda",
+      "Colecistitis no complicada",
+      "Cólico biliar simple",
+      "Hepatitis A"
+     ],
+     "a": 0,
+     "e": "Dolor + fiebre + ictericia = tríada de Charcot: colangitis aguda, por un cálculo en el colédoco que se ha infectado."
+    },
+    {
+     "q": "Además está hipotensa y confusa. Este cuadro se denomina:",
+     "o": [
+      "Pentada de Reynolds",
+      "Tríada de Virchow",
+      "Signo de Courvoisier",
+      "Signo de Murphy"
+     ],
+     "a": 0,
+     "e": "Charcot + shock + confusión = pentada de Reynolds: colangitis grave que requiere drenaje urgente de la vía biliar (CPRE)."
+    },
+    {
+     "q": "Tras la cirugía lleva un tubo de Kehr. ¿Qué es INCORRECTO?",
+     "o": [
+      "Colocar la bolsa por encima del punto de inserción",
+      "Registrar el débito y sus características",
+      "Pinzar antes y después de las comidas cuando se indique",
+      "Vigilar dolor, plenitud o náuseas al pinzar"
+     ],
+     "a": 0,
+     "e": "La bolsa debe quedar POR DEBAJO de la inserción para drenar por gravedad y evitar el reflujo biliar. La intolerancia al pinzado se manifiesta con dolor, plenitud o náuseas."
+    }
+   ]
+  }
+ ]
+}
