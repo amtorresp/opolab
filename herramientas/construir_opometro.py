@@ -5,7 +5,8 @@ Uso (desde la raíz del repositorio):
     python3 herramientas/construir_opometro.py                # tema digestivo (por defecto)
     python3 herramientas/construir_opometro.py digestivo
 
-Lee  datos/<tema>/preguntas_<tema>.xlsx  y  datos/<tema>/contenido.json
+Lee  datos/<tema>/preguntas_<tema>.xlsx, datos/<tema>/contenido.json
+y las imágenes de marca de datos/marca/ (p. ej. logo-oposalud.svg), que se incrustan en el juego.
 Escribe juegos/opometro-<tema>/index.html  y  juegos/opometro-<tema>/opometro-<tema>-scorm.zip
 Requiere: pip install openpyxl
 """
@@ -23,7 +24,7 @@ DATOS = RAIZ / 'datos' / TEMA
 SALIDA = RAIZ / 'juegos' / f'opometro-{TEMA}'
 ESTACIONES = {'anat', 'boca', 'estom', 'agudo', 'intestino', 'higado', 'bilipan', 'valor', 'sondas', 'ostom'}
 ESTADOS = {'Válida': None, 'Anulada': 'N', 'Obsoleta': 'O'}
-LETRA = {'a': 0, 'b': 1, 'c': 2, 'd': 3}
+LETRA = {'a': 0, 'b': 1, 'c': 2, 'd': 3, 'e': 4}
 
 def txt(v):
     return re.sub(r'[ \t]+', ' ', str(v)).strip() if v is not None else ''
@@ -47,12 +48,18 @@ def leer_preguntas(contenido):
         if pid in ids:
             err('ID repetido')
         ids.add(pid)
+        estado = g('Estado') or 'Válida'
+        if estado == 'Anulada':
+            continue  # las anuladas no se publican en el juego
         opciones = [g(f'Opción {l}') for l in 'abcd']
         while opciones and not opciones[-1]:
             opciones.pop()
+        if g('Opción e (repaso)'):
+            if estado != 'Obsoleta':
+                err('«Opción e (repaso)» solo se admite en preguntas obsoletas')
+            opciones.append(g('Opción e (repaso)'))
         if len(opciones) < 2:
             err('necesita al menos 2 opciones')
-        estado = g('Estado') or 'Válida'
         if estado not in ESTADOS:
             err(f'estado «{estado}» no válido (Válida, Anulada u Obsoleta)')
         clave = g('Clave').lower()
@@ -67,9 +74,13 @@ def leer_preguntas(contenido):
                 err(f'trampa «{g("Trampa")}» desconocida')
             q['tr'] = g('Trampa')
         if ESTADOS.get(estado):
-            q['st'] = ESTADOS[estado]; q['a'] = None
-            if g('Hoy correcta').lower() in LETRA:
-                q['now'] = LETRA[g('Hoy correcta').lower()]
+            q['st'] = ESTADOS[estado]
+            hoy = g('Hoy correcta').lower()
+            if hoy not in LETRA or LETRA[hoy] >= len(opciones):
+                err('las obsoletas necesitan «Hoy correcta» (la respuesta vigente)'); continue
+            q['a'] = LETRA[hoy]
+            if clave in LETRA:
+                q['orig'] = LETRA[clave]
         else:
             if clave not in LETRA or LETRA[clave] >= len(opciones):
                 err(f'clave «{clave}» no válida'); continue
@@ -93,8 +104,23 @@ def main():
         print('Se han encontrado errores; no se genera el juego:\n  ' + '\n  '.join(errores))
         sys.exit(1)
     dump = lambda o: json.dumps(o, ensure_ascii=False, separators=(',', ':')).replace('</', '<\\/')
-    html = (RAIZ / 'herramientas' / 'plantilla_opometro.html').read_text(encoding='utf-8')
-    html = html.replace('/*__PREGUNTAS__*/[]', dump(preguntas)).replace('/*__CONTENIDO__*/{}', dump(contenido))
+    plantilla = RAIZ / 'herramientas' / 'plantilla'
+    html = (plantilla / 'pagina.html').read_text(encoding='utf-8')
+    html = html.replace('/*__ESTILOS__*/', (plantilla / 'estilos.css').read_text(encoding='utf-8'))
+    html = html.replace('/*__APP__*/', (plantilla / 'app.js').read_text(encoding='utf-8'))
+    marca = {}
+    import base64, mimetypes
+    for f in sorted((DATOS.parent / 'marca').glob('*')) if (DATOS.parent / 'marca').exists() else []:
+        tipo = mimetypes.guess_type(f.name)[0]
+        if tipo and tipo.startswith('image/'):
+            marca[f.stem] = f'data:{tipo};base64,' + base64.b64encode(f.read_bytes()).decode()
+    imagenes = {}
+    for f in sorted((DATOS / 'imagenes').glob('*')) if (DATOS / 'imagenes').exists() else []:
+        tipo = mimetypes.guess_type(f.name)[0] or ('image/webp' if f.suffix == '.webp' else None)
+        if tipo and tipo.startswith('image/'):
+            imagenes[f.stem] = f'data:{tipo};base64,' + base64.b64encode(f.read_bytes()).decode()
+    html = html.replace('/*__IMAGENES__*/{}', dump(imagenes))
+    html = html.replace('/*__PREGUNTAS__*/[]', dump(preguntas)).replace('/*__CONTENIDO__*/{}', dump(contenido)).replace('/*__MARCA__*/{}', dump(marca))
     SALIDA.mkdir(parents=True, exist_ok=True)
     (SALIDA / 'index.html').write_text(html, encoding='utf-8')
     # Paquete SCORM 1.2 para Moodle u otras plataformas
@@ -111,8 +137,8 @@ def main():
         z.writestr('imsmanifest.xml', manifest)
         z.writestr('index.html', html.replace('href="../../"', 'href="#"'))
     (SALIDA / f'opometro-{TEMA}-scorm.zip').write_bytes(buf.getvalue())
-    validas = sum(1 for q in preguntas if not q.get('st'))
-    print(f'✓ {len(preguntas)} preguntas ({validas} jugables) → {SALIDA.relative_to(RAIZ)}/index.html y paquete SCORM')
+    obs = sum(1 for q in preguntas if q.get('st'))
+    print(f'✓ {len(preguntas)} preguntas publicadas ({obs} obsoletas como repaso; logos: {", ".join(marca) or "ninguno"}) → {SALIDA.relative_to(RAIZ)}/index.html y paquete SCORM')
 
 if __name__ == '__main__':
     main()
