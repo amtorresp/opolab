@@ -114,6 +114,12 @@ def main():
         tipo = mimetypes.guess_type(f.name)[0]
         if tipo and tipo.startswith('image/'):
             marca[f.stem] = f'data:{tipo};base64,' + base64.b64encode(f.read_bytes()).decode()
+    imagenes = {}
+    for f in sorted((DATOS / 'imagenes').glob('*')) if (DATOS / 'imagenes').exists() else []:
+        tipo = mimetypes.guess_type(f.name)[0] or ('image/webp' if f.suffix == '.webp' else None)
+        if tipo and tipo.startswith('image/'):
+            imagenes[f.stem] = f'data:{tipo};base64,' + base64.b64encode(f.read_bytes()).decode()
+    html = html.replace('/*__IMAGENES__*/{}', dump(imagenes))
     html = html.replace('/*__PREGUNTAS__*/[]', dump(preguntas)).replace('/*__CONTENIDO__*/{}', dump(contenido)).replace('/*__MARCA__*/{}', dump(marca))
     SALIDA.mkdir(parents=True, exist_ok=True)
     (SALIDA / 'index.html').write_text(html, encoding='utf-8')

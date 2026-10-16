@@ -2,6 +2,7 @@
 const Q=/*__PREGUNTAS__*/[];
 const C=/*__CONTENIDO__*/{};
 const MARCA=/*__MARCA__*/{};
+const IMAGENES=/*__IMAGENES__*/{};
 const FICHAS=C.fichas||{},ESCALAS=C.escalas||[],CONCEPTOS=C.conceptos||{},TRAMPAS=C.trampas||[],CASOS=C.casos||[];
 
 /* ---------- iconos propios (24 × 24, trazo) ---------- */
@@ -21,6 +22,7 @@ const P={
  mudo:'<path d="M4 9.3v5.4h3.6L12.5 19V5L7.6 9.3z"/><path d="m16.5 9.5 5 5M21.5 9.5l-5 5"/>',
  ok:'<path d="m5 12.5 4.5 4.5L19 7.5"/>',
  ko:'<path d="M6.5 6.5l11 11M17.5 6.5l-11 11"/>',
+ estoma:'<path d="M8 3.5h8a3 3 0 0 1 3 3V15a6.5 6.5 0 0 1-6.5 6.5h-1A6.5 6.5 0 0 1 5 15V6.5a3 3 0 0 1 3-3z"/><circle cx="12" cy="10" r="3.4"/><circle cx="12" cy="10" r="1.1"/><path d="M8.5 17.5h7"/>',
  bombilla:'<path d="M9.3 18h5.4M10.2 21h3.6"/><path d="M12 3a6 6 0 0 0-3.6 10.8c.6.5 1 1.2 1 2.2h5.2c0-1 .4-1.7 1-2.2A6 6 0 0 0 12 3z"/>',
  duda:'<circle cx="12" cy="12" r="9"/><path d="M9.6 9.4a2.5 2.5 0 1 1 3.5 2.3c-.7.3-1.1 1-1.1 1.7v.5"/><circle cx="12" cy="16.9" r=".7" fill="currentColor"/>',
  llama:'<path d="M12 2.8c.9 3.6 5.2 5.3 5.2 10.3a5.2 5.2 0 0 1-10.4 0c0-2.1 1-3.6 2.1-4.7.3 1.6 1 2.6 2.1 3.1-.1-3.1-.1-5.6 1-8.7z"/>',
@@ -106,6 +108,7 @@ const BADGES=[
  {id:'racha10',t:'Tren exprés',d:'10 aciertos seguidos',c:'#d9480f',test:()=>S.best>=10},
  {id:'dias3',t:'Constancia',d:'3 días seguidos estudiando',c:'#d9480f',test:()=>dayStreak()>=3},
  {id:'obs',t:'Al día',d:'Todas las obsoletas acertadas',c:'#b7791f',test:()=>OBS.length&&OBS.every(q=>S.q[q.id]&&S.q[q.id].ok)},
+ {id:'osto',t:'Estomaterapeuta',d:'Lámina de las ostomías sin un fallo',c:'#d23f57',test:()=>(S.lab.osto||0)>=OSTO_MAX},
  {id:'lab',t:'Laboratorio',d:'Colon y Bristol completos',c:'#6a5ae0',test:()=>(S.lab.colon||0)>=6&&(S.lab.bristol||0)>=7}
 ];
 function checkBadges(){
@@ -156,8 +159,8 @@ function render(html,color){
 }
 const backBtn=(to='home',txt='Mapa')=>`<div class="back noPrint"><button class="btn ghost" data-go="${to}">${I('flecha')}${txt}</button></div>`;
 const heroBox=(eb,t,p,c)=>`<section class="stHero" style="--lc:${c}"><div class="eyebrow">${eb}</div><h1>${t}</h1><p>${p}</p></section>`;
-function toast(html){let t=$('.toast');if(!t){t=document.createElement('div');t.className='toast';t.setAttribute('role','status');document.body.appendChild(t)}
-  t.innerHTML=html;t.classList.add('show');clearTimeout(t._h);t._h=setTimeout(()=>t.classList.remove('show'),2600)}
+function toast(html,top){let t=$('.toast');if(!t){t=document.createElement('div');t.className='toast';t.setAttribute('role','status');document.body.appendChild(t)}
+  t.classList.toggle('top',!!top);t.innerHTML=html;t.classList.add('show');clearTimeout(t._h);t._h=setTimeout(()=>t.classList.remove('show'),2600)}
 function ringSVG(p,size,color,label,sub){const R=size/2-9,Cc=2*Math.PI*R;return `<svg class="ring" viewBox="0 0 ${size} ${size}" style="width:${size}px;height:${size}px"><circle cx="${size/2}" cy="${size/2}" r="${R}" fill="none" stroke="#e7eef6" stroke-width="10"/>${p>0?`<circle cx="${size/2}" cy="${size/2}" r="${R}" fill="none" stroke="${color}" stroke-width="10" stroke-linecap="round" stroke-dasharray="${(Cc*Math.min(p,1)).toFixed(1)} ${Cc.toFixed(1)}" transform="rotate(-90 ${size/2} ${size/2})"/>`:''}<text x="50%" y="${sub?'47%':'55%'}" text-anchor="middle" font-size="${size/4.6}" font-weight="800" fill="#0b2a55">${label}</text>${sub?`<text x="50%" y="66%" text-anchor="middle" font-size="${size/9}" font-weight="700" fill="#5d7089">${sub}</text>`:''}</svg>`}
 
 /* ---------- cabecera ---------- */
@@ -183,7 +186,7 @@ function home(){
     {k:'trampas',ic:'trampa',c:'#d23f57',t:'Trampas del tribunal',d:'Los engaños de siempre y por qué falla cada opción.',m:`${TRAMPAS.length} trampas`},
     {k:'casos',ic:'fonendo',c:'#0b7bc0',t:'Supuestos clínicos',d:'Un paciente, varias preguntas encadenadas.',m:`${CASOS.length} casos`},
     {k:'escalas',ic:'cartas',c:'#12a37a',t:'OpoEscalas exprés',d:'Signos, escalas, tríadas, maniobras y sondas.',m:`${ESCALAS.length} tarjetas`},
-    {k:'lab',ic:'matraz',c:'#6a5ae0',t:'Laboratorio visual',d:'Colon interactivo, escala de Bristol y simulador del MECV-V.',m:'3 actividades'}
+    {k:'lab',ic:'matraz',c:'#6a5ae0',t:'Laboratorio visual',d:'Nueva: la lámina de las ostomías de clase. Y además colon, Bristol y MECV-V.',m:(IMAGENES.ostomias?4:3)+' actividades'}
   ].map(m=>`<button class="mode" style="--tc:${m.c}" data-go="${m.k}"><span class="tile">${I(m.ic)}</span><h3>${m.t}</h3><p>${m.d}</p><span class="meta">${m.m}</span>${m.badge?`<span class="badge">${m.badge}</span>`:''}</button>`).join('');
   render(`
   <section class="hero">
@@ -533,13 +536,155 @@ function casos(){
 function lab(){
   lastView='lab';
   render(`${backBtn()}
-  ${heroBox('Aprender mirando','Laboratorio visual','Tres actividades para fijar los conceptos que mejor se entienden con una imagen.','#6a5ae0')}
+  ${heroBox('Aprender mirando','Laboratorio visual','Actividades para fijar los conceptos que mejor se entienden con una imagen.','#6a5ae0')}
   <section class="labGrid">
+    ${IMAGENES.ostomias?`<button class="mode" style="--tc:#d23f57" data-go="ostomias"><span class="new">NUEVO</span><span class="tile">${I('estoma')}</span><h3>La lámina de las ostomías</h3><p>Sobre el dibujo de clase: coloca cada estoma, sus heces y cuánto irritan; después, ordena el recorrido.</p><span class="meta">${S.lab.osto?'Récord '+S.lab.osto+'/'+OSTO_MAX:'Sin jugar todavía'}</span></button>`:''}
     <button class="mode" style="--tc:#0aa8e5" data-go="colon"><span class="tile">${I('colon')}</span><h3>Colon interactivo</h3><p>Toca cada tramo y descubre cómo son las heces de su ostomía. Después, ponte a prueba.</p><span class="meta">Récord ${S.lab.colon||0}/6</span></button>
     <button class="mode" style="--tc:#8a5a2b" data-go="bristol"><span class="tile">${I('heces')}</span><h3>Escala de Bristol</h3><p>Reconoce los 7 tipos de heces por su forma y lo que indican.</p><span class="meta">Récord ${S.lab.bristol||0}/7</span></button>
     <button class="mode" style="--tc:#12a37a" data-go="mecv"><span class="tile">${I('cuchara')}</span><h3>Simulador MECV-V</h3><p>Decide el siguiente bolo según la respuesta del paciente, como en la consulta.</p><span class="meta">${S.lab.mecv||0} pacientes atendidos</span></button>
   </section>`,'#6a5ae0');
 }
+/* ---------- La lámina de las ostomías (dibujo de clase, arrastrar y colocar) ---------- */
+const OZ=(x0,y0,x1,y1)=>({l:x0/20,t:y0/11.25,w:(x1-x0)/20,h:(y1-y0)/11.25});      /* píxeles del dibujo original (2000 × 1125) → % */
+const OZC=(cx,cy,w,h)=>OZ(cx-w/2,cy-h/2,cx+w/2,cy+h/2);
+const OSTO=[
+ {k:'est',t:'Ubica cada estoma',d:'Lleva cada ostomía a su recuadro. Sigue la flecha: apunta al tramo donde se abre el estoma.',
+  pista:'Fíjate en la flecha de cada recuadro y recuerda que el dibujo está de frente: la derecha del paciente queda a tu izquierda.',
+  regla:'De proximal a distal: ileostomía → cecostomía → colostomías ascendente, transversa y descendente → sigmoidostomía.',
+  z:[{id:'e1',v:'Ileostomía',...OZ(748,886,956,951),i:'Íleon terminal, casi siempre en la FID. Débito continuo: vigila la deshidratación.'},
+     {id:'e2',v:'Cecostomía',...OZ(420,755,663,820),i:'Es la ostomía más proximal del colon.'},
+     {id:'e3',v:'Colostomía ascendente',...OZ(346,325,589,428),i:'Lado derecho del paciente: a tu izquierda en el dibujo.'},
+     {id:'e4',v:'Colostomía transversa',...OZ(757,113,1000,216),i:'Suele hacerse en asa, con varilla de soporte.'},
+     {id:'e5',v:'Colostomía descendente',...OZ(1421,307,1664,412),i:'Lado izquierdo del paciente. Admite la irrigación.'},
+     {id:'e6',v:'Sigmoidostomía',...OZ(1237,830,1517,895),i:'En la FII. Es la evacuación más parecida a la normal.'}]},
+ {k:'hec',t:'¿Cómo salen las heces?',d:'Coloca cada consistencia sobre la deposición que corresponde a cada tramo.',
+  pista:'A medida que el contenido avanza por el colon se absorbe agua: cuanto más distal, más formadas.',
+  regla:'Cuanto más distal es el estoma, más sólidas son las heces (el colon ha tenido tiempo de absorber agua).',
+  z:[{id:'h1',v:'Líquidas',...OZC(633,940,150,52),i:'Ileostomía y cecostomía: débito líquido y continuo; bolsa abierta.'},
+     {id:'h2',v:'Semilíquidas',...OZC(470,550,200,52),i:'Colostomía ascendente: bolsa abierta.'},
+     {id:'h3',v:'Blandas',...OZC(1113,185,170,52),i:'Colostomía transversa: heces pastosas.'},
+     {id:'h4',v:'Semiblandas',...OZC(1542,542,200,52),i:'Colostomía descendente: ya se puede usar bolsa cerrada.'},
+     {id:'h5',v:'Sólidas',...OZC(1468,748,140,52),i:'Sigmoidostomía: heces formadas; bolsa cerrada e irrigación posible.'}]},
+ {k:'irr',t:'¿Cuánto irritan la piel?',d:'Etiqueta cada tramo según lo agresivas que son sus heces para la piel periestomal.',
+  pista:'Lo que irrita la piel son las enzimas digestivas: hay más cuanto más líquidas y proximales son las heces.',
+  regla:'Más líquidas = más enzimas = más irritación. Por eso en la ileostomía se ajusta el disco al milímetro y se vigila la piel.',
+  z:[{id:'i1',v:'Muy irritantes (+++++)',...OZ(15,920,245,1065),i:'Ileostomía: el débito lleva enzimas activas; la piel se lesiona en horas.'},
+     {id:'i2',v:'Irritantes (++)',...OZ(140,25,370,170),i:'Cecostomía y colostomía ascendente.'},
+     {id:'i3',v:'Poco irritantes (+/-)',...OZ(1405,18,1640,165),i:'Colostomía transversa.'},
+     {id:'i4',v:'No irritantes',...OZ(1765,405,1992,555),i:'Colostomía descendente.'},
+     {id:'i5',v:'No irritantes',...OZ(1545,925,1775,1072),i:'Sigmoidostomía.'}]}
+];
+const RUTA=['Ileostomía','Cecostomía','Colostomía ascendente','Colostomía transversa','Colostomía descendente','Sigmoidostomía'];
+const OSTO_MAX=OSTO.reduce((n,f)=>n+f.z.length,0)+RUTA.length;
+let OS=null;
+function ostomias(){
+  lastView='ostomias';
+  render(`${backBtn('lab','Laboratorio')}
+  ${heroBox('Laboratorio visual · tu lámina de clase','La lámina de las ostomías','El mismo dibujo que veis en clase, con los rótulos tapados. Tres fases para reconstruirlo y una cuarta para ordenar el recorrido.','#d23f57')}
+  <section class="card">
+    <div class="oSteps">${OSTO.map((f,i)=>`<div><b>${i+1}</b><span>${f.t}</span></div>`).join('')}<div><b>4</b><span>Ordena el recorrido</span></div></div>
+    <p class="small" style="margin:12px 0 0">Arrastra cada etiqueta hasta su hueco o, si lo prefieres (en el móvil es más cómodo), tócala y después toca el hueco. Cada etiqueta bien colocada a la primera suma un punto: máximo ${OSTO_MAX}.</p>
+    <div class="row" style="margin-top:14px"><button class="btn primary" data-ostogo>Empezar${I('adelante')}</button><button class="btn ghost" data-ostover>Estudiar antes la lámina</button></div>
+  </section>`,'#d23f57');
+}
+function ostoVer(){
+  render(`${backBtn('ostomias','La lámina')}
+  <section class="card"><h3 style="margin:0 0 10px">La lámina completa</h3><div class="oScroll"><div class="oStage"><img src="${IMAGENES.ostomias}" alt="Lámina de las ostomías: tramos del intestino, consistencia de las heces e irritación de la piel" draggable="false"></div></div>
+  <div class="rule good" style="margin-top:14px"><div class="lbl">Regla de oro</div><p>Cuanto más distal es el estoma, más sólidas y menos irritantes son las heces.</p></div>
+  <button class="btn primary" data-ostogo>Ya la tengo: empezar${I('adelante')}</button></section>`,'#d23f57');
+}
+function ostoStart(){OS={f:0,done:{},bad:{},ok:0,sel:null,t0:Date.now(),ruta:[],rbad:{},chips:[]};ostoPhase()}
+function ostoPhase(){
+  const f=OSTO[OS.f];
+  OS.chips=shuffle(f.z.map(z=>z.v)).map(v=>({v,used:false}));OS.sel=null;ostoDraw(true);
+}
+function ostoDraw(nueva){
+  const f=OSTO[OS.f];
+  const zones=OSTO.map((ph,pi)=>ph.z.map(z=>{
+    const st=OS.done[z.id]?'done':pi===OS.f?'tgt':pi>OS.f?'later':'done';
+    return `<button class="oz ${st}" data-oz="${z.id}" style="left:${z.l}%;top:${z.t}%;width:${z.w}%;height:${z.h}%" ${st==='tgt'?`aria-label="Hueco para ${esc(f.t.toLowerCase())}"`:'tabindex="-1" aria-hidden="true"'}></button>`}).join('')).join('');
+  const left=OS.chips.filter(c=>!c.used).length;
+  const html=`${backBtn('ostomias','La lámina')}
+  <section class="card oGame">
+    <div class="row" style="justify-content:space-between;align-items:flex-start"><div><div class="eyebrow" style="color:#d23f57">Fase ${OS.f+1} de 4</div><h3 style="margin:2px 0 4px">${f.t}</h3><p class="small" style="margin:0">${f.d}</p></div><span class="qcount">${OS.ok} pts</span></div>
+    <p class="oHint">${I('flecha')} Desliza la lámina para verla entera ${I('adelante')}</p>
+    <div class="oScroll" style="margin-top:12px"><div class="oStage"><img src="${IMAGENES.ostomias}" alt="" draggable="false">${zones}</div></div>
+    <div class="oTray" role="group" aria-label="Etiquetas por colocar">${left?OS.chips.map((c,i)=>c.used?'':`<button class="oChip${OS.sel===i?' sel':''}" data-ochip="${i}">${esc(c.v)}</button>`).join(''):`<div class="oPhaseEnd"><div><b>${I('ok')} Fase completada.</b> ${f.regla}</div><button class="btn primary" data-ostonext>${OS.f<OSTO.length-1?'Siguiente fase':'Última fase: el recorrido'}${I('adelante')}</button></div>`}</div>
+  </section>`;
+  if(nueva) return render(html,'#d23f57');
+  const sc=$('.oScroll'),sl=sc?sc.scrollLeft:0;app.innerHTML=html;const sc2=$('.oScroll');if(sc2)sc2.scrollLeft=sl;   /* sin saltar arriba */
+}
+function ostoPlace(ci,zid){
+  const f=OSTO[OS.f],z=f.z.find(x=>x.id===zid),c=OS.chips[ci];
+  if(!z||!c||c.used||OS.done[zid])return;
+  const el=$(`[data-oz="${zid}"]`);
+  if(c.v===z.v){
+    OS.done[zid]=1;c.used=true;OS.sel=null;
+    if(!OS.bad[c.v+OS.f])OS.ok++;
+    SND.ok();toast(`${I('ok')}<span><b>${esc(c.v)}.</b> ${esc(z.i)}</span>`,1);
+    ostoDraw();const n=$(`[data-oz="${zid}"]`);if(n)n.classList.add('pop');
+    if(!OS.chips.some(x=>!x.used))SND.arrive();
+  }else{
+    OS.bad[c.v+OS.f]=1;SND.ko();
+    if(el){el.classList.remove('no');void el.offsetWidth;el.classList.add('no')}
+    const ch=$(`[data-ochip="${ci}"]`);if(ch){ch.classList.remove('shake');void ch.offsetWidth;ch.classList.add('shake')}
+    toast(`${I('bombilla')}<span>${esc(f.pista)}</span>`,1);
+  }
+}
+function ostoRuta(){
+  const rest=shuffle(RUTA.filter(r=>!OS.ruta.includes(r)));
+  const n=OS.ruta.length;
+  render(`${backBtn('ostomias','La lámina')}
+  <section class="card">
+    <div class="row" style="justify-content:space-between;align-items:flex-start"><div><div class="eyebrow" style="color:#d23f57">Fase 4 de 4</div><h3 style="margin:2px 0 4px">Ordena el recorrido</h3><p class="small" style="margin:0">Toca las ostomías en el orden en que las atraviesa el contenido intestinal: de la más proximal a la más distal.</p></div><span class="qcount">${OS.ok} pts</span></div>
+    <ol class="oRuta">${RUTA.map((r,i)=>`<li class="${i<n?'on':''}"><i>${i+1}</i><span>${i<n?esc(r):'?'}</span></li>`).join('')}</ol>
+    <div class="oGrad"><span>Líquidas · muy irritantes</span><span>Sólidas · no irritantes</span></div>
+    <div class="oTray">${n<RUTA.length?rest.map(r=>`<button class="oChip" data-oruta="${esc(r)}">${esc(r)}</button>`).join(''):''}</div>
+  </section>`,'#d23f57');
+}
+function ostoRutaPick(v,btn){
+  const want=RUTA[OS.ruta.length];
+  if(v===want){if(!OS.rbad[want])OS.ok++;OS.ruta.push(v);SND.ok();if(OS.ruta.length===RUTA.length)return ostoFin();return ostoRuta()}
+  OS.rbad[want]=1;SND.ko();btn.classList.remove('shake');void btn.offsetWidth;btn.classList.add('shake');
+  toast(`${I('bombilla')}<span>Aún no: piensa qué tramo viene justo después ${OS.ruta.length?'de la '+esc(OS.ruta[OS.ruta.length-1].toLowerCase()):'del intestino delgado'}.</span>`,1);
+}
+function ostoFin(){
+  const s=Math.round((Date.now()-OS.t0)/1000),p=pct(OS.ok,OSTO_MAX),rec=OS.ok>(S.lab.osto||0);
+  S.lab.osto=Math.max(S.lab.osto||0,OS.ok);save();checkBadges();SND.arrive();
+  render(`${backBtn('lab','Laboratorio')}
+  <section class="card" style="text-align:center;position:relative;overflow:hidden">
+    ${p>=85?confetti():''}
+    <div class="eyebrow" style="color:#d23f57">Lámina reconstruida</div>
+    <h2 style="margin:4px 0">${OS.ok}/${OSTO_MAX} a la primera</h2>
+    <p class="small" style="margin:0">${Math.floor(s/60)} min ${s%60} s${rec?' · <b>¡Nuevo récord!</b>':''}</p>
+    <p style="max-width:560px;margin:10px auto 0">${p===100?'Perfecta: esta lámina ya es tuya. Llévala al test.':p>=75?'Muy bien. Repásala una vez más y fíjate en los huecos que te costaron.':'Vuelve a estudiar la lámina y repite: en dos intentos se fija.'}</p>
+    <div class="oScroll" style="margin:14px 0"><div class="oStage"><img src="${IMAGENES.ostomias}" alt="Lámina de las ostomías completa" draggable="false"></div></div>
+    <div class="row" style="justify-content:center"><button class="btn primary" data-trip="ostom" data-n="10">Practicar 10 preguntas de ostomías${I('adelante')}</button><button class="btn ghost" data-ostogo>Jugar otra vez</button><button class="btn ghost" data-go="lab">Laboratorio</button></div>
+  </section>`,'#d23f57');
+}
+/* arrastrar con ratón o dedo; si no hay arrastre, el toque selecciona */
+let ODR=null;
+document.addEventListener('pointerdown',e=>{
+  const c=e.target.closest('.oChip[data-ochip]');if(!c||e.button>0)return;
+  if(e.pointerType==='mouse')e.preventDefault();               /* evita seleccionar texto al arrastrar */
+  ODR={c,i:+c.dataset.ochip,x:e.clientX,y:e.clientY,g:null,over:null};
+});
+document.addEventListener('pointermove',e=>{
+  if(!ODR)return;
+  if(!ODR.g){if(Math.hypot(e.clientX-ODR.x,e.clientY-ODR.y)<7)return;
+    const g=ODR.c.cloneNode(true);g.classList.add('ghost');document.body.appendChild(g);ODR.g=g;ODR.c.classList.add('lift');}
+  e.preventDefault();ODR.g.style.left=e.clientX+'px';ODR.g.style.top=e.clientY+'px';
+  const z=document.elementFromPoint(e.clientX,e.clientY);const t=z&&z.closest('.oz.tgt');
+  if(ODR.over&&ODR.over!==t)ODR.over.classList.remove('hov');if(t)t.classList.add('hov');ODR.over=t;
+},{passive:false});
+document.addEventListener('pointerup',e=>{
+  if(!ODR)return;const d=ODR;ODR=null;
+  if(!d.g)return;                      /* fue un toque: lo gestiona el click */
+  d.g.remove();d.c.classList.remove('lift');if(d.over)d.over.classList.remove('hov');
+  d.c._dragged=true;setTimeout(()=>{d.c._dragged=false},50);
+  if(d.over)ostoPlace(d.i,d.over.dataset.oz);
+});
+document.addEventListener('pointercancel',()=>{if(ODR&&ODR.g){ODR.g.remove();ODR.c.classList.remove('lift')}ODR=null});
 const SEGS=[
  {k:'ileon',n:'Íleon (ileostomía)',d:'M232,322 C200,312 170,338 132,338',lx:170,ly:366,c:'Líquidas',x:'Muy irritantes (enzimas)',b:'Abierta; vaciar a 1/3-1/2',nota:'Débito continuo: vigilar la deshidratación. Suele ir en la FID.'},
  {k:'ciego',n:'Ciego (cecostomía)',d:'M108,340 L108,378',lx:60,ly:410,c:'Líquidas',x:'Muy irritantes',b:'Abierta',nota:'Es la ostomía más proximal del colon.'},
@@ -798,7 +943,7 @@ function csv(){
 /* ---------- navegación y eventos ---------- */
 function go(k){
   if(k==='home'||k==='mapa'){home();if(k==='mapa')setTimeout(()=>{const m=$('.mapCard');(m&&m.offsetParent?m:$('.metroV')).scrollIntoView({behavior:'smooth'})},50);return}
-  const V={sim:simSetup,escalas:escalasHome,archivo,cae,trampas,casos,lab,informe,bristol,mecv,buscar,colon:()=>{COL.mode='explore';colon()}};
+  const V={ostomias,sim:simSetup,escalas:escalasHome,archivo,cae,trampas,casos,lab,informe,bristol,mecv,buscar,colon:()=>{COL.mode='explore';colon()}};
   if(V[k]) return V[k]();
   if(k==='repaso'){const items=shuffle(ALL.filter(q=>isDue(q.id))).slice(0,20);return startQuiz(items,{mode:'repaso',title:'Repaso inteligente',color:'#d23f57'})}
   if(k==='dia') return startQuiz(dailyTrip(),{mode:'dia',title:'Viaje del día',color:'#0aa8e5'});
@@ -839,6 +984,12 @@ document.addEventListener('click',e=>{
   if(t.hasAttribute('data-colonquiz')){COL.mode='quiz';COL.round={order:shuffle(SEGS.map(s=>s.k)),i:0,ok:0,state:{},done:false};return colonQuiz()}
   if(d.cons!==undefined) return colonAnswer(+d.cons);
   if(t.hasAttribute('data-colonnext')) return colonNext();
+  if(t.hasAttribute('data-ostogo')) return ostoStart();
+  if(t.hasAttribute('data-ostover')) return ostoVer();
+  if(t.hasAttribute('data-ostonext')){if(OS.f<OSTO.length-1){OS.f++;return ostoPhase()}return ostoRuta()}
+  if(d.ochip!==undefined){if(t._dragged)return;const i=+d.ochip;OS.sel=OS.sel===i?null:i;$$('.oChip').forEach(b=>b.classList.toggle('sel',+b.dataset.ochip===OS.sel));$$('.oz.tgt').forEach(z=>z.classList.toggle('ready',OS.sel!==null));return}
+  if(d.oz){if(OS&&OS.sel!==null)ostoPlace(OS.sel,d.oz);else toast(`${I('bombilla')}<span>Primero elige una etiqueta de abajo y después toca su hueco.</span>`,1);return}
+  if(d.oruta) return ostoRutaPick(d.oruta,t);
   if(d.br!==undefined) return bristolAnswer(+d.br);
   if(t.hasAttribute('data-brnext')) return bristolNext();
   if(d.mv!==undefined) return mecvAnswer(+d.mv);

@@ -51,3 +51,13 @@ Añade `?docente=1` a la URL del juego para ver las notas de revisión y el list
 ## SCORM
 
 Sube `opometro-digestivo-scorm.zip` como actividad SCORM. La plataforma recibirá como nota el % del tema dominado (completado a partir del 80 %) y el progreso se sincroniza entre dispositivos del alumno.
+
+## Imágenes de clase (láminas interactivas)
+
+Las imágenes de `datos/digestivo/imagenes/` se incrustan en el juego al construirlo (no hay que subirlas aparte).
+Ahora mismo contiene `ostomias.webp`, el dibujo de clase que usa **Laboratorio visual → La lámina de las ostomías**.
+
+- Si se sustituye el dibujo, debe mantener **la misma composición** (proporción 16:9 y rótulos en el mismo sitio):
+  los huecos que se tapan están definidos en `herramientas/plantilla/app.js` (constante `OSTO`) en píxeles del
+  dibujo original de 2000 × 1125.
+- Para cambiar textos, pistas o datos clínicos de cada hueco, edítese también `OSTO` (campos `v`, `i`, `pista`, `regla`).
