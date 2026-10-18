@@ -3,6 +3,7 @@ const Q=/*__PREGUNTAS__*/[];
 const C=/*__CONTENIDO__*/{};
 const MARCA=/*__MARCA__*/{};
 const IMAGENES=/*__IMAGENES__*/{};
+const VIDEOS=C.videos||[];
 const FICHAS=C.fichas||{},ESCALAS=C.escalas||[],CONCEPTOS=C.conceptos||{},TRAMPAS=C.trampas||[],CASOS=C.casos||[];
 
 /* ---------- iconos propios (24 × 24, trazo) ---------- */
@@ -23,6 +24,7 @@ const P={
  ok:'<path d="m5 12.5 4.5 4.5L19 7.5"/>',
  ko:'<path d="M6.5 6.5l11 11M17.5 6.5l-11 11"/>',
  estoma:'<path d="M8 3.5h8a3 3 0 0 1 3 3V15a6.5 6.5 0 0 1-6.5 6.5h-1A6.5 6.5 0 0 1 5 15V6.5a3 3 0 0 1 3-3z"/><circle cx="12" cy="10" r="3.4"/><circle cx="12" cy="10" r="1.1"/><path d="M8.5 17.5h7"/>',
+ play:'<circle cx="12" cy="12" r="9.2"/><path d="M10 8.4v7.2l6-3.6z" fill="currentColor"/>',
  bombilla:'<path d="M9.3 18h5.4M10.2 21h3.6"/><path d="M12 3a6 6 0 0 0-3.6 10.8c.6.5 1 1.2 1 2.2h5.2c0-1 .4-1.7 1-2.2A6 6 0 0 0 12 3z"/>',
  duda:'<circle cx="12" cy="12" r="9"/><path d="M9.6 9.4a2.5 2.5 0 1 1 3.5 2.3c-.7.3-1.1 1-1.1 1.7v.5"/><circle cx="12" cy="16.9" r=".7" fill="currentColor"/>',
  llama:'<path d="M12 2.8c.9 3.6 5.2 5.3 5.2 10.3a5.2 5.2 0 0 1-10.4 0c0-2.1 1-3.6 2.1-4.7.3 1.6 1 2.6 2.1 3.1-.1-3.1-.1-5.6 1-8.7z"/>',
@@ -212,6 +214,7 @@ function home(){
     </div>
   </section>
   <div class="sectionTitle"><div><span class="eyebrow">Cómo quieres estudiar</span><h2>Modos de juego</h2></div></div>
+  ${VIDEOS.length?`<button class="vBanner" data-go="capsulas"><span class="vPlay">${I('play')}</span><span><span class="eyebrow">Nuevo · cápsulas de vídeo</span><b>${esc(VIDEOS[0].t)}</b><small>${esc(VIDEOS[0].d)}</small></span><span class="vGo">${VIDEOS.length>1?'Ver las '+VIDEOS.length+' cápsulas':'Ver ahora'}${I('adelante')}</span></button>`:''}
   <section class="modes">${modes}</section>
   <div class="sectionTitle"><div><span class="eyebrow">10 estaciones · 3 líneas</span><h2>Mapa de la red</h2></div><span class="small">Pulsa una estación</span></div>
   <section class="mapCard" aria-label="Mapa de estaciones">${mapSVG()}
@@ -543,6 +546,51 @@ function lab(){
     <button class="mode" style="--tc:#8a5a2b" data-go="bristol"><span class="tile">${I('heces')}</span><h3>Escala de Bristol</h3><p>Reconoce los 7 tipos de heces por su forma y lo que indican.</p><span class="meta">Récord ${S.lab.bristol||0}/7</span></button>
     <button class="mode" style="--tc:#12a37a" data-go="mecv"><span class="tile">${I('cuchara')}</span><h3>Simulador MECV-V</h3><p>Decide el siguiente bolo según la respuesta del paciente, como en la consulta.</p><span class="meta">${S.lab.mecv||0} pacientes atendidos</span></button>
   </section>`,'#6a5ae0');
+}
+/* ---------- Cápsulas de vídeo (datos en contenido.json → videos) ---------- */
+let VQ=null;
+function capsulas(){
+  if(VIDEOS.length===1) return capsula(VIDEOS[0].id);
+  lastView='capsulas';
+  render(`${backBtn()}${heroBox('Aprender en un minuto','Cápsulas de vídeo','Vídeos cortos con lo esencial de cada tema y un minitest para comprobar que se ha quedado.','#d23f57')}
+  <section class="labGrid">${VIDEOS.map(v=>`<button class="mode" style="--tc:#d23f57" data-vid="${v.id}"><span class="tile">${I('play')}</span><h3>${esc(v.t)}</h3><p>${esc(v.d)}</p><span class="meta">${S.lab['vid-'+v.id]!==undefined?'Minitest: '+S.lab['vid-'+v.id]+'/'+v.quiz.length:'Sin ver todavía'}</span></button>`).join('')}</section>`,'#d23f57');
+}
+function capsula(id){
+  const v=VIDEOS.find(x=>x.id===id);if(!v)return home();
+  lastView='capsulas';VQ={v,i:0,ok:0,done:false};
+  const reales=ALL.filter(q=>v.buscar&&new RegExp(v.buscar,'i').test(q.q)).length;
+  render(`${backBtn(VIDEOS.length>1?'capsulas':'home',VIDEOS.length>1?'Cápsulas':'Mapa')}
+  <section class="card">
+    <div class="eyebrow" style="color:#d23f57">Cápsula de vídeo</div><h2 style="margin:2px 0 12px">${esc(v.t)}</h2>
+    <div class="vBox"><video controls playsinline preload="metadata" src="${esc(v.src)}"></video>
+      <div class="vErr" hidden><p>No se ha podido cargar el vídeo aquí.</p>${v.abrir?`<a class="btn primary" href="${esc(v.abrir)}" target="_blank" rel="noopener">Abrir el vídeo en otra pestaña${I('adelante')}</a>`:''}</div></div>
+    ${v.claves?`<div class="rule good" style="margin-top:14px"><div class="lbl">Lo que tienes que llevarte</div><ul class="vKeys">${v.claves.map(c=>`<li>${esc(c)}</li>`).join('')}</ul></div>`:''}
+  </section>
+  <section class="card" id="vquiz" style="margin-top:14px"></section>
+  <div class="row noPrint" style="margin-top:14px">${reales?`<button class="btn line" data-vreal="${v.id}">Practicar ${reales} preguntas reales de OPE${I('adelante')}</button>`:''}${v.lab?`<button class="btn ghost" data-go="${v.lab}">Actividad del Laboratorio</button>`:''}</div>`,'#d23f57');
+  const vid=$('.vBox video');vid.addEventListener('error',()=>{vid.hidden=true;$('.vErr').hidden=false});
+  vid.addEventListener('ended',()=>{SND.arrive();$('#vquiz').scrollIntoView({behavior:'smooth',block:'start'})});
+  vqDraw();
+}
+function vqDraw(){
+  const {v,i}=VQ,q=v.quiz[i],box=$('#vquiz');if(!box)return;
+  box.innerHTML=`<div class="row" style="justify-content:space-between"><h3 style="margin:0">Minitest</h3><span class="qcount">${i+1}/${v.quiz.length}</span></div>
+  <p style="font-weight:700;margin:10px 0">${esc(q.q)}</p><div class="opts">${q.o.map((o,j)=>`<button class="opt" data-vq="${j}"><span class="k">${L[j]}</span><span>${esc(o)}</span></button>`).join('')}</div><div class="fb" aria-live="polite"></div>`;
+}
+function vqAnswer(j){
+  const {v,i}=VQ,q=v.quiz[i];if(VQ.done)return;VQ.done=true;
+  const ok=j===q.a;if(ok){VQ.ok++;SND.ok()}else SND.ko();
+  $$('#vquiz .opt').forEach((b,k)=>{b.disabled=true;b.classList.add(k===q.a?'ok':k===j?'ko':'dim')});
+  const fb=$('#vquiz .fb');fb.className='fb show '+(ok?'ok':'ko');
+  const last=i===v.quiz.length-1;
+  fb.innerHTML=`<div class="fbHead">${ok?I('ok')+'Correcto':I('ko')+'Es la '+L[q.a]}</div><p class="why">${esc(q.e)}</p><div class="fbAct"><button class="btn primary" data-vqnext>${last?'Ver resultado':'Siguiente'}${I('adelante')}</button></div>`;
+}
+function vqNext(){
+  const {v}=VQ;
+  if(VQ.i<v.quiz.length-1){VQ.i++;VQ.done=false;return vqDraw()}
+  S.lab['vid-'+v.id]=Math.max(S.lab['vid-'+v.id]||0,VQ.ok);save();SND.arrive();
+  const p=pct(VQ.ok,v.quiz.length);
+  $('#vquiz').innerHTML=`<div style="text-align:center"><h3 style="margin:0">${VQ.ok}/${v.quiz.length} en el minitest</h3><p class="small" style="margin:6px 0 12px">${p===100?'Perfecto: a por las preguntas reales.':'Vuelve a ver el vídeo y repite el minitest.'}</p><button class="btn ghost" data-vredo>Repetir minitest</button></div>`;
 }
 /* ---------- La lámina de las ostomías (dibujo de clase, arrastrar y colocar) ---------- */
 const OZ=(x0,y0,x1,y1)=>({l:x0/20,t:y0/11.25,w:(x1-x0)/20,h:(y1-y0)/11.25});      /* píxeles del dibujo original (2000 × 1125) → % */
@@ -943,7 +991,7 @@ function csv(){
 /* ---------- navegación y eventos ---------- */
 function go(k){
   if(k==='home'||k==='mapa'){home();if(k==='mapa')setTimeout(()=>{const m=$('.mapCard');(m&&m.offsetParent?m:$('.metroV')).scrollIntoView({behavior:'smooth'})},50);return}
-  const V={ostomias,sim:simSetup,escalas:escalasHome,archivo,cae,trampas,casos,lab,informe,bristol,mecv,buscar,colon:()=>{COL.mode='explore';colon()}};
+  const V={capsulas,ostomias,sim:simSetup,escalas:escalasHome,archivo,cae,trampas,casos,lab,informe,bristol,mecv,buscar,colon:()=>{COL.mode='explore';colon()}};
   if(V[k]) return V[k]();
   if(k==='repaso'){const items=shuffle(ALL.filter(q=>isDue(q.id))).slice(0,20);return startQuiz(items,{mode:'repaso',title:'Repaso inteligente',color:'#d23f57'})}
   if(k==='dia') return startQuiz(dailyTrip(),{mode:'dia',title:'Viaje del día',color:'#0aa8e5'});
@@ -984,6 +1032,11 @@ document.addEventListener('click',e=>{
   if(t.hasAttribute('data-colonquiz')){COL.mode='quiz';COL.round={order:shuffle(SEGS.map(s=>s.k)),i:0,ok:0,state:{},done:false};return colonQuiz()}
   if(d.cons!==undefined) return colonAnswer(+d.cons);
   if(t.hasAttribute('data-colonnext')) return colonNext();
+  if(d.vid) return capsula(d.vid);
+  if(d.vq!==undefined) return vqAnswer(+d.vq);
+  if(t.hasAttribute('data-vqnext')) return vqNext();
+  if(t.hasAttribute('data-vredo')){VQ.i=0;VQ.ok=0;VQ.done=false;return vqDraw()}
+  if(d.vreal){const v=VIDEOS.find(x=>x.id===d.vreal);return startQuiz(prioritize(ALL.filter(q=>new RegExp(v.buscar,'i').test(q.q)),'all'),{mode:'video',title:'Preguntas reales: '+v.t,color:'#d23f57',back:'capsulas'})}
   if(t.hasAttribute('data-ostogo')) return ostoStart();
   if(t.hasAttribute('data-ostover')) return ostoVer();
   if(t.hasAttribute('data-ostonext')){if(OS.f<OSTO.length-1){OS.f++;return ostoPhase()}return ostoRuta()}
