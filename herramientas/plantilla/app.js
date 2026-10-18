@@ -562,7 +562,7 @@ function capsula(id){
   render(`${backBtn(VIDEOS.length>1?'capsulas':'home',VIDEOS.length>1?'Cápsulas':'Mapa')}
   <section class="card">
     <div class="eyebrow" style="color:#d23f57">Cápsula de vídeo</div><h2 style="margin:2px 0 12px">${esc(v.t)}</h2>
-    <div class="vBox"><video controls playsinline preload="metadata" src="${esc(v.src)}"></video>
+    <div class="vBox"><video controls controlslist="nodownload noremoteplayback" playsinline preload="metadata" oncontextmenu="return false" src="${esc(v.src)}"></video>
       <div class="vErr" hidden><p>No se ha podido cargar el vídeo aquí.</p>${v.abrir?`<a class="btn primary" href="${esc(v.abrir)}" target="_blank" rel="noopener">Abrir el vídeo en otra pestaña${I('adelante')}</a>`:''}</div></div>
     ${v.claves?`<div class="rule good" style="margin-top:14px"><div class="lbl">Lo que tienes que llevarte</div><ul class="vKeys">${v.claves.map(c=>`<li>${esc(c)}</li>`).join('')}</ul></div>`:''}
   </section>
