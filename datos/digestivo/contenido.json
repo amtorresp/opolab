@@ -813,5 +813,69 @@
     }
    ]
   }
+ ],
+ "videos": [
+  {
+   "id": "bristol",
+   "t": "La escala de Bristol, sin vergüenza",
+   "d": "Los siete tipos de heces se presentan solos. En un minuto y medio, con humor y con lo que pregunta el tribunal.",
+   "src": "https://www.dropbox.com/scl/fi/vje86ylnytqpo2llgkmkn/1018.mp4?rlkey=7e4kagdsoa5zl40z07y0g93rz&raw=1",
+   "abrir": "https://www.dropbox.com/scl/fi/vje86ylnytqpo2llgkmkn/1018.mp4?rlkey=7e4kagdsoa5zl40z07y0g93rz&dl=0",
+   "s": "intestino",
+   "buscar": "bristol",
+   "lab": "bristol",
+   "claves": [
+    "Del 1 al 7: más agua y tránsito más rápido.",
+    "1 y 2: estreñimiento (severo y leve).",
+    "3 y 4: normales; el 4 es la ideal.",
+    "5: falta de fibra · 6: diarrea leve · 7: diarrea."
+   ],
+   "quiz": [
+    {
+     "q": "¿Qué tipos de la escala de Bristol se consideran normales?",
+     "o": [
+      "1 y 2",
+      "3 y 4",
+      "5 y 6",
+      "6 y 7"
+     ],
+     "a": 1,
+     "e": "El 3 (salchicha con grietas) y el 4 (lisa y blanda, la ideal)."
+    },
+    {
+     "q": "Heces en bolitas duras y separadas, como nueces, difíciles de expulsar:",
+     "o": [
+      "Tipo 1: estreñimiento severo",
+      "Tipo 2: estreñimiento leve",
+      "Tipo 5: falta de fibra",
+      "Tipo 6: diarrea leve"
+     ],
+     "a": 0,
+     "e": "El tipo 1 es el de tránsito más lento: el colon ha absorbido casi toda el agua."
+    },
+    {
+     "q": "Trozos blandos con los bordes bien definidos, que se expulsan sin esfuerzo:",
+     "o": [
+      "Tipo 3",
+      "Tipo 4",
+      "Tipo 5",
+      "Tipo 7"
+     ],
+     "a": 2,
+     "e": "Es el tipo 5 y suele indicar falta de fibra."
+    },
+    {
+     "q": "A medida que se sube del tipo 1 al tipo 7…",
+     "o": [
+      "Hay menos agua y el tránsito es más lento",
+      "Hay más agua y el tránsito es más rápido",
+      "Hay más fibra y las heces son más formadas",
+      "La consistencia no se relaciona con el tránsito"
+     ],
+     "a": 1,
+     "e": "Regla de oro: cuanto más alto el número, más agua y más rápido ha pasado por el intestino."
+    }
+   ]
+  }
  ]
 }

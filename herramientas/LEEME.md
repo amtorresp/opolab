@@ -61,3 +61,14 @@ Ahora mismo contiene `ostomias.webp`, el dibujo de clase que usa **Laboratorio v
   los huecos que se tapan están definidos en `herramientas/plantilla/app.js` (constante `OSTO`) en píxeles del
   dibujo original de 2000 × 1125.
 - Para cambiar textos, pistas o datos clínicos de cada hueco, edítese también `OSTO` (campos `v`, `i`, `pista`, `regla`).
+
+## Cápsulas de vídeo
+
+Se definen en `datos/digestivo/contenido.json`, en la lista `videos`. Cada cápsula tiene:
+`id`, `t` (título), `d` (descripción), `src` (enlace directo al MP4), `abrir` (enlace para abrirlo aparte si falla),
+`claves` (ideas que llevarse), `quiz` (minitest: `q`, `o`, `a` = índice de la correcta empezando en 0, `e`),
+`buscar` (palabra para encontrar las preguntas reales relacionadas) y `lab` (actividad del Laboratorio relacionada).
+
+- Con Dropbox: en el enlace compartido, cambie `dl=0` por `raw=1` para `src`.
+- Con Google Drive no sirve el enlace normal dentro del reproductor; use Dropbox, YouTube o un MP4 alojado.
+- La primera cápsula aparece destacada en la portada.
