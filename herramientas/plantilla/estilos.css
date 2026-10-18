@@ -401,3 +401,29 @@ body.embedded .topbar{top:0}
 .vErr[hidden]{display:none}
 .vKeys{margin:6px 0 0;padding-left:18px;display:grid;gap:4px}
 @media (max-width:760px){.vBanner{grid-template-columns:auto 1fr;padding:14px}.vGo{grid-column:1/-1;justify-self:start}.vPlay{width:44px;height:44px}}
+
+/* ---- estudiar ahora / claves exprés / idea clave ---- */
+.quick{display:grid;grid-template-columns:1.6fr 1fr 1fr 1fr;gap:10px;margin:0 0 16px}
+.qk{display:flex;gap:10px;align-items:center;text-align:left;background:#fff;border:1px solid var(--line);border-radius:16px;padding:12px 14px;font:inherit;color:var(--ink);cursor:pointer;box-shadow:var(--shadow);transition:transform .15s,border-color .15s}
+.qk:hover{transform:translateY(-2px);border-color:#9fd9f2}
+.qk svg.i{flex:none;width:22px;height:22px;color:var(--cyan)}
+.qk b{display:block;font-size:15px;line-height:1.2}
+.qk small{display:block;font-size:12.5px;color:var(--muted);margin-top:2px}
+.qk.main{background:var(--navy);border-color:var(--navy);color:#fff}
+.qk.main svg.i{color:#7fd3f5}.qk.main small{color:rgba(255,255,255,.75)}
+.kIdea{display:flex;gap:8px;align-items:flex-start;margin:10px 0 0;background:#fffbea;border:1px solid #f4dc8a;border-radius:12px;padding:9px 12px;font-size:15px;line-height:1.4;color:#3b2f05}
+.kIdea svg.i{flex:none;width:18px;height:18px;color:#d99a00;margin-top:2px}
+.chip.rep{background:#fde8ec;color:#a02842}
+.clText{font-size:20px;line-height:1.55;margin:16px 0 18px;min-height:150px}
+.clText b{color:var(--navy)}
+.clNav{display:flex;justify-content:space-between;gap:10px}
+.clJump{display:flex;flex-wrap:wrap;gap:6px;margin-top:16px;padding-top:14px;border-top:1px solid var(--line)}
+.clJump button{border:1px solid var(--line);background:#fff;border-radius:99px;padding:5px 11px;font:600 12.5px inherit;color:var(--muted);cursor:pointer}
+.clJump button.on{background:var(--lc);border-color:var(--lc);color:#fff}
+@media (max-width:760px){
+  .quick{grid-template-columns:repeat(3,minmax(0,1fr));gap:8px}
+  .qk.main{grid-column:1/-1;flex-direction:row;padding:14px 16px}
+  .qk{flex-direction:column;align-items:flex-start;gap:6px;padding:10px}.qk b{font-size:13.5px}.qk small{font-size:11.5px}
+  .hero .heroTxt>p,.hero .lines{display:none}
+  .clText{font-size:18px;min-height:190px}
+}

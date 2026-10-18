@@ -25,6 +25,8 @@ const P={
  ko:'<path d="M6.5 6.5l11 11M17.5 6.5l-11 11"/>',
  estoma:'<path d="M8 3.5h8a3 3 0 0 1 3 3V15a6.5 6.5 0 0 1-6.5 6.5h-1A6.5 6.5 0 0 1 5 15V6.5a3 3 0 0 1 3-3z"/><circle cx="12" cy="10" r="3.4"/><circle cx="12" cy="10" r="1.1"/><path d="M8.5 17.5h7"/>',
  play:'<circle cx="12" cy="12" r="9.2"/><path d="M10 8.4v7.2l6-3.6z" fill="currentColor"/>',
+ rayo:'<path d="M13.5 2.5 5 13.5h6l-1 8 8.5-11h-6z"/>',
+ libro:'<path d="M4 4.5A1.5 1.5 0 0 1 5.5 3H11v16H5.5A1.5 1.5 0 0 0 4 20.5zM20 4.5A1.5 1.5 0 0 0 18.5 3H13v16h5.5a1.5 1.5 0 0 1 1.5 1.5z"/>',
  bombilla:'<path d="M9.3 18h5.4M10.2 21h3.6"/><path d="M12 3a6 6 0 0 0-3.6 10.8c.6.5 1 1.2 1 2.2h5.2c0-1 .4-1.7 1-2.2A6 6 0 0 0 12 3z"/>',
  duda:'<circle cx="12" cy="12" r="9"/><path d="M9.6 9.4a2.5 2.5 0 1 1 3.5 2.3c-.7.3-1.1 1-1.1 1.7v.5"/><circle cx="12" cy="16.9" r=".7" fill="currentColor"/>',
  llama:'<path d="M12 2.8c.9 3.6 5.2 5.3 5.2 10.3a5.2 5.2 0 0 1-10.4 0c0-2.1 1-3.6 2.1-4.7.3 1.6 1 2.6 2.1 3.1-.1-3.1-.1-5.6 1-8.7z"/>',
@@ -162,7 +164,7 @@ function render(html,color){
 const backBtn=(to='home',txt='Mapa')=>`<div class="back noPrint"><button class="btn ghost" data-go="${to}">${I('flecha')}${txt}</button></div>`;
 const heroBox=(eb,t,p,c)=>`<section class="stHero" style="--lc:${c}"><div class="eyebrow">${eb}</div><h1>${t}</h1><p>${p}</p></section>`;
 function toast(html,top){let t=$('.toast');if(!t){t=document.createElement('div');t.className='toast';t.setAttribute('role','status');document.body.appendChild(t)}
-  t.classList.toggle('top',!!top);t.innerHTML=html;t.classList.add('show');clearTimeout(t._h);t._h=setTimeout(()=>t.classList.remove('show'),2600)}
+  t.classList.toggle('top',!!top);if(!/<span/.test(html))html=html.replace(/^(<svg[\s\S]*?<\/svg>)?([\s\S]*)$/,(m,ic,tx)=>(ic||'')+'<span>'+tx+'</span>');t.innerHTML=html;t.classList.add('show');clearTimeout(t._h);t._h=setTimeout(()=>t.classList.remove('show'),2600)}
 function ringSVG(p,size,color,label,sub){const R=size/2-9,Cc=2*Math.PI*R;return `<svg class="ring" viewBox="0 0 ${size} ${size}" style="width:${size}px;height:${size}px"><circle cx="${size/2}" cy="${size/2}" r="${R}" fill="none" stroke="#e7eef6" stroke-width="10"/>${p>0?`<circle cx="${size/2}" cy="${size/2}" r="${R}" fill="none" stroke="${color}" stroke-width="10" stroke-linecap="round" stroke-dasharray="${(Cc*Math.min(p,1)).toFixed(1)} ${Cc.toFixed(1)}" transform="rotate(-90 ${size/2} ${size/2})"/>`:''}<text x="50%" y="${sub?'47%':'55%'}" text-anchor="middle" font-size="${size/4.6}" font-weight="800" fill="#0b2a55">${label}</text>${sub?`<text x="50%" y="66%" text-anchor="middle" font-size="${size/9}" font-weight="700" fill="#5d7089">${sub}</text>`:''}</svg>`}
 
 /* ---------- cabecera ---------- */
@@ -182,7 +184,7 @@ function home(){
   const lines=[1,2,3].map(k=>`<span class="lpill"><i style="background:${LINES[k].c}"></i>${LINES[k].name.split(' · ')[1]}</span>`).join('');
   const modes=[
     {k:'dia',ic:'objetivo',c:'#0aa8e5',t:'Viaje del día',d:'10 preguntas a tu medida: primero lo que toca repasar y luego lo que más cae.',m:`${hoy}/${GOAL} hoy`},
-    {k:'sim',ic:'crono',c:'#3c3fb8',t:'Simulacro OPE',d:'Como el examen: filtra por comunidad, con cronómetro y −1/3 por error.',m:`${EXAM.length} preguntas`},
+    {k:'sim',ic:'crono',c:'#3c3fb8',t:'Simulacro OPE',d:'Como el examen: filtra por comunidad, con cronómetro y la penalización de tu convocatoria.',m:`${EXAM.length} preguntas`},
     {k:'repaso',ic:'repaso',c:'#d23f57',t:'Repaso inteligente',d:'Tus fallos vuelven hoy, mañana, a los 3 y a los 7 días.',m:g.due?`${g.due} para hoy`:'Al día',badge:g.due},
     {k:'cae',ic:'grafica',c:'#c27a12',t:'Lo que más cae',d:'Los conceptos que más repiten los tribunales, ordenados.',m:`${Object.keys(CONCEPTOS).length} conceptos`},
     {k:'trampas',ic:'trampa',c:'#d23f57',t:'Trampas del tribunal',d:'Los engaños de siempre y por qué falla cada opción.',m:`${TRAMPAS.length} trampas`},
@@ -190,7 +192,15 @@ function home(){
     {k:'escalas',ic:'cartas',c:'#12a37a',t:'OpoEscalas exprés',d:'Signos, escalas, tríadas, maniobras y sondas.',m:`${ESCALAS.length} tarjetas`},
     {k:'lab',ic:'matraz',c:'#6a5ae0',t:'Laboratorio visual',d:'Nueva: la lámina de las ostomías de clase. Y además colon, Bristol y MECV-V.',m:(IMAGENES.ostomias?4:3)+' actividades'}
   ].map(m=>`<button class="mode" style="--tc:${m.c}" data-go="${m.k}"><span class="tile">${I(m.ic)}</span><h3>${m.t}</h3><p>${m.d}</p><span class="meta">${m.m}</span>${m.badge?`<span class="badge">${m.badge}</span>`:''}</button>`).join('');
-  render(`
+  const cur=S.cur&&S.cur.ids&&S.cur.i<S.cur.ids.length?S.cur:null;
+  const quick=`<section class="quick" aria-label="Estudiar ahora">
+    ${cur?`<button class="qk main" data-seguir>${I('adelante')}<span><b>Seguir donde lo dejé</b><small>${esc(cur.title)} · ${cur.i}/${cur.ids.length}</small></span></button>`:
+      `<button class="qk main" data-go="${g.due?'repaso':'dia'}">${I(g.due?'repaso':'objetivo')}<span><b>${g.due?'Repasar lo de hoy':'Viaje del día'}</b><small>${g.due?g.due+' preguntas te esperan':'10 preguntas a tu medida'}</small></span></button>`}
+    <button class="qk" data-go="rapido">${I('crono')}<span><b>5 minutos</b><small>5 preguntas</small></span></button>
+    <button class="qk" data-go="claves">${I('libro')}<span><b>Claves exprés</b><small>Repaso sin preguntas</small></span></button>
+    ${g.pending?`<button class="qk" data-go="fallos">${I('ko')}<span><b>Mis fallos</b><small>${g.pending} en repaso</small></span></button>`:`<button class="qk" data-go="sim">${I('crono')}<span><b>Simulacro</b><small>Como el examen</small></span></button>`}
+  </section>`;
+  render(`${quick}
   <section class="hero">
     <div class="heroTxt">${heroArt()}
       <div class="eyebrow">OpoLab · Tema 15 · Digestivo</div>
@@ -295,7 +305,7 @@ function station(sid){
 }
 function prioritize(pool,n){
   const rank=q=>isDue(q.id)?0:!S.q[q.id]?1:!isMastered(q.id)?2:3;
-  pool=shuffle(pool).sort((a,b)=>rank(a)-rank(b));
+  pool=sinGemelas(shuffle(pool).sort((a,b)=>rank(a)-rank(b)));
   return n==='all'?pool:pool.slice(0,+n);
 }
 function pickTrip(sid,n){const pool=ALL.filter(q=>q.s===sid);return n==='pend'?shuffle(pool.filter(q=>isPending(q.id))):prioritize(pool,n)}
@@ -303,12 +313,14 @@ function dailyTrip(){
   const due=shuffle(ALL.filter(q=>isDue(q.id))).slice(0,5);
   const freq={};ALL.forEach(q=>freq[q.t]=(freq[q.t]||0)+1);
   const rest=ALL.filter(q=>!due.includes(q)&&!isMastered(q.id)).map(q=>({q,w:Math.random()*(1+freq[q.t]/10)*(S.q[q.id]?0.6:1)})).sort((a,b)=>b.w-a.w).map(x=>x.q);
-  return shuffle([...due,...rest.slice(0,10-due.length)]);
+  return shuffle(sinGemelas([...due,...rest]).slice(0,10));
 }
 
 /* ---------- motor de preguntas ---------- */
 let G=null;
+function sinGemelas(items){const vistos=new Set();return items.filter(q=>{if(!q.g)return true;if(vistos.has(q.g))return false;vistos.add(q.g);return true})}
 function startQuiz(items,opt){
+  if(!(opt&&opt.mode==='buscar'))items=sinGemelas(items);
   if(!items.length){emptyMsg();return}
   G=Object.assign({items:items.map(q=>({q,order:q.ns?[...q.o.keys()]:shuffle([...q.o.keys()]),pick:null,ok:null})),i:0,color:'var(--cyan)',back:'home',t0:Date.now(),combo:0,prevPct:0},opt);
   drawQ();
@@ -344,7 +356,7 @@ function drawQ(){
   <article class="qcard">
     ${q.intro?`<div class="caseBox">${I('fonendo')}<span><b>Caso:</b> ${esc(q.intro)}</span></div>`:''}
     ${q.st?`<div class="obsNote">${I('arena')}<span><b>Pregunta obsoleta.</b> Salió en ${esc(q.ex)} con un criterio que hoy ya no se aplica. Respóndela según la evidencia actual.</span></div>`:''}
-    <div class="qchips"><span class="chip src">${I(q.intro?'matraz':'billete')}${esc(q.ex)}</span><span class="chip stn" style="--lc:${colorOf(q.s)}">${esc(s.name)}</span>${q.st?'<span class="chip obs">Obsoleta</span>':''}</div>
+    <div class="qchips"><span class="chip src">${I(q.intro?'matraz':'billete')}${esc(q.ex)}</span><span class="chip stn" style="--lc:${colorOf(q.s)}">${esc(s.name)}</span>${q.st?'<span class="chip obs">Obsoleta</span>':''}${q.rep&&G.mode!=='sim'?`<span class="chip rep">${I('repaso')}Ha caído ${q.rep.length+1} veces</span>`:''}</div>
     <h2 class="qtext">${esc(q.q)}</h2>
     <div class="opts" role="group" aria-label="Opciones de respuesta">${opts}</div>
     <div class="fb" aria-live="polite"></div>
@@ -381,9 +393,11 @@ function answer(pos){
   const last=G.i===G.items.length-1;
   const trib=q.st&&q.orig!=null?`<p class="tribunal"><b>Clave que dio el tribunal:</b> ${esc(q.o[q.orig])} <span class="small">(ya no es válida)</span></p>`:'';
   fb.innerHTML=`<div class="fbHead">${it.ok?I('ok')+(q.st?'Correcto según la evidencia actual':'Correcto'):I('ko')+`La correcta es la ${L[cp]})`}</div>
+    ${q.k?`<p class="kIdea">${I('rayo')}<span><b>Idea clave:</b> ${esc(q.k)}</span></p>`:''}
     ${!it.ok&&q.po&&q.po[mine]?`<p class="whyNot"><b>Tu respuesta, la ${L[pos]}):</b> ${esc(q.po[mine])}</p>`:''}
     <p class="why" style="margin-top:8px"><b>${q.st?'Qué ha cambiado:':'Por qué:'}</b> ${why(q.e)}</p>
     ${trib}${othersHTML(it)}
+    ${q.rep?`<p class="small" style="margin:8px 0 0"><b>También ha caído en:</b> ${q.rep.map(esc).join(' · ')}</p>`:''}
     ${DOCENTE&&q.f?`<div class="flag"><b>Nota de revisión:</b> ${esc(q.f)}</div>`:''}
     <div class="fbAct">${it.ok?
       `<button class="btn primary" data-sure="1">${I('bombilla')}Lo sabía</button><button class="btn ghost" data-sure="0">${I('duda')}He dudado</button>`:
@@ -392,19 +406,30 @@ function answer(pos){
   fb.querySelector('.fbAct button').focus({preventScroll:true});
   fb.scrollIntoView({block:'nearest',behavior:'smooth'});
 }
+function guardaSesion(){            /* para «seguir donde lo dejé» */
+  if(G.mode==='sim'||G.items.some(it=>typeof it.q.id!=='number')){return}
+  if(G.i>=G.items.length){delete S.cur}else S.cur={ids:G.items.map(it=>it.q.id),i:G.i,title:G.title,mode:G.mode,color:G.color,back:G.back};
+  save();
+}
+function seguir(){
+  const c=S.cur;if(!c)return home();
+  const items=c.ids.slice(c.i).map(id=>byId[id]).filter(Boolean);
+  delete S.cur;save();
+  startQuiz(items,{mode:c.mode,title:c.title,color:c.color,back:c.back});
+}
 function next(sure){
   const it=G.items[G.i];
   if(G.mode!=='sim') register(it.q.id,it.ok,!!sure);
-  if(G.i<G.items.length-1){G.i++;drawQ()}else finish();
+  if(G.i<G.items.length-1){G.i++;guardaSesion();drawQ()}else{delete S.cur;save();finish()}
 }
 function confetti(){const cs=['#0aa8e5','#12a37a','#6a5ae0','#f2a33a','#e5484d'];return `<div class="confetti">${Array.from({length:40},(_,i)=>`<i style="left:${Math.random()*100}%;background:${cs[i%5]};animation-delay:${(Math.random()*.6).toFixed(2)}s;transform:rotate(${Math.random()*180|0}deg)"></i>`).join('')}</div>`}
 function finish(){
   clearInterval(G.tm);
   if(G.mode==='sim'){G.items.forEach(it=>register(it.q.id,it.pick!==null&&it.ok,true,true));save()}
   const n=G.items.length,ok=G.items.filter(i=>i.ok).length,ko=G.items.filter(i=>i.pick!==null&&!i.ok).length,blank=n-ok-ko;
-  const net=Math.max(0,ok-ko/3),nota=(net*10/n);
+  const pen=G.mode==='sim'?(G.pen??3):3,net=Math.max(0,ok-(pen?ko/pen:0)),nota=(net*10/n);
   const mins=Math.max(1,Math.round((Date.now()-G.t0)/60000));
-  if(G.mode==='sim'){S.sims.unshift({d:Date.now(),n,ok,ko,nota:+nota.toFixed(2),f:G.filtro||''});S.sims=S.sims.slice(0,10);save()}
+  if(G.mode==='sim'){S.sims.unshift({d:Date.now(),n,ok,ko,nota:+nota.toFixed(2),f:[G.filtro,PEN[pen]].filter(Boolean).join(' · ')});S.sims=S.sims.slice(0,10);save()}
   checkBadges();
   const p=pct(ok,n);
   const msg=p>=85?'Trayecto de matrícula':p>=65?'Buen viaje: vas por la vía correcta':p>=45?'Vas bien, pero hay estaciones que repasar':'Toca volver a las claves y repasar';
@@ -417,6 +442,7 @@ function finish(){
     return `<details class="revItem"><summary><span class="st" style="background:${st[0]}">${I(st[1])}</span><span>${esc(q.q.length>140?q.q.slice(0,140)+'…':q.q)}</span></summary><div class="body">
       ${mine!==null&&!it.ok?`<p>Tu respuesta: <b style="color:var(--ko)">${L[it.pick]}) ${esc(q.o[mine])}</b>${q.po&&q.po[mine]?` — ${esc(q.po[mine])}`:''}</p>`:''}
       <p>Correcta: <b style="color:var(--ok)">${L[cp]}) ${esc(q.o[q.a])}</b></p>
+      ${q.k?`<p class="kIdea">${I('rayo')}<span><b>Idea clave:</b> ${esc(q.k)}</span></p>`:''}
       <p class="why"><b>${q.st?'Qué ha cambiado:':'Por qué:'}</b> ${why(q.e)}</p><p class="small">${esc(q.ex)} · ${esc(stById[q.s].name)}</p></div></details>`}).join('');
   SND.arrive();
   render(`
@@ -428,7 +454,7 @@ function finish(){
       ${p>=65?`<span class="stamp">VALIDADO</span>`:''}
     </div>
     ${G.rule?`<div class="rule good" style="margin-top:12px"><div class="lbl">Regla para no caer</div><p>${esc(G.rule.regla)}</p></div>`:''}
-    ${G.mode==='sim'?`<div class="resGrid"><div class="stat"><b>${nota.toFixed(2)}</b><span>nota sobre 10 (−1/3 por error)</span></div><div class="stat"><b>${net.toFixed(2)}</b><span>aciertos netos</span></div><div class="stat"><b>${S.sims.length>1?S.sims[1].nota.toFixed(2):'—'}</b><span>nota del simulacro anterior</span></div></div>`:''}
+    ${G.mode==='sim'?`<div class="resGrid"><div class="stat"><b>${nota.toFixed(2)}</b><span>nota sobre 10 (${PEN[pen]})</span></div><div class="stat"><b>${net.toFixed(2)}</b><span>aciertos netos</span></div><div class="stat"><b>${S.sims.length>1?S.sims[1].nota.toFixed(2):'—'}</b><span>nota del simulacro anterior</span></div></div>`:''}
     ${Object.keys(byS).length>1?`<div class="card" style="margin-top:12px"><h3>Por estaciones</h3>${Object.entries(byS).map(([k,v])=>`<div class="kv"><span><span style="color:${colorOf(k)}">●</span> ${stById[k].name}</span><b>${v.ok}/${v.n}</b></div>`).join('')}</div>`:''}
     <div class="row" style="margin:14px 0">
       ${fails.length?`<button class="btn primary" data-redo>${I('repaso')}Repetir mis fallos (${fails.length})</button>`:''}
@@ -443,17 +469,21 @@ function goBack(b){if(stById[b])return station(b);if(b.startsWith('trampa:'))ret
 
 /* ---------- simulacro ---------- */
 const ORGS=uniq(EXAM.map(q=>q.org)).sort((a,b)=>a.localeCompare(b,'es'));
-let SIM={n:20,s:'all',org:'all',rec:false,crono:false};
+let SIM={n:20,s:'all',org:'all',rec:false,crono:false,pen:3};
+const PEN={3:'−1/3 por error',4:'−1/4 por error',0:'sin penalización'};
 const simPool=()=>EXAM.filter(q=>(SIM.s==='all'||q.s===SIM.s)&&(SIM.org==='all'||q.org===SIM.org)&&(!SIM.rec||q.y>=RECENT));
 function simSetup(){
   lastView='sim';
-  const pool=simPool();
+  const pool=sinGemelas(simPool());
   render(`${backBtn()}
-  ${heroBox('Modo examen','Simulacro OPE','Sin pistas hasta el final. Se corrige como en la mayoría de las OPE: cada error resta 1/3 de acierto.','#3c3fb8')}
+  ${heroBox('Modo examen','Simulacro OPE','Sin pistas hasta el final. Elige cómo penaliza tu convocatoria y entrena con ese mismo sistema.','#3c3fb8')}
   <section class="grid2">
     <div class="card">
       <h3>Número de preguntas</h3>
       <div class="seg3" data-group="n">${[10,20,40,60].map(n=>`<button class="${SIM.n===n?'on':''}" data-v="${n}">${n}</button>`).join('')}</div>
+      <h3 style="margin-top:18px">Penalización por error</h3>
+      <div class="seg3" data-group="pen">${[3,4,0].map(v=>`<button class="${SIM.pen===v?'on':''}" data-v="${v}">${v?'−1/'+v:'Ninguna'}</button>`).join('')}</div>
+      <p class="small" style="margin:6px 0 0">Consulta las bases de tu convocatoria: la mayoría resta 1/3 o 1/4 por cada error; los errores en blanco no restan.</p>
       <h3 style="margin-top:18px">Comunidad o servicio de salud</h3>
       <div class="filters" data-group="org"><button class="${SIM.org==='all'?'on':''}" data-v="all">Todas</button>${ORGS.map(o=>`<button class="${SIM.org===o?'on':''}" data-v="${esc(o)}">${esc(o)} (${EXAM.filter(q=>q.org===o).length})</button>`).join('')}</div>
       <h3 style="margin-top:18px">Temario</h3>
@@ -547,6 +577,23 @@ function lab(){
     <button class="mode" style="--tc:#12a37a" data-go="mecv"><span class="tile">${I('cuchara')}</span><h3>Simulador MECV-V</h3><p>Decide el siguiente bolo según la respuesta del paciente, como en la consulta.</p><span class="meta">${S.lab.mecv||0} pacientes atendidos</span></button>
   </section>`,'#6a5ae0');
 }
+/* ---------- Claves exprés: repaso de las claves de todas las estaciones, sin preguntas ---------- */
+let CL={i:0};
+const CLAVES=ST.filter(s=>(FICHAS[s.id]||[]).length).flatMap(s=>FICHAS[s.id].map((f,j)=>({s,f,j,n:FICHAS[s.id].length})));
+function claves(i){
+  lastView='claves';if(i!==undefined)CL.i=Math.max(0,Math.min(CLAVES.length-1,i));
+  const c=CLAVES[CL.i],col=LINES[c.s.line].c;
+  render(`${backBtn()}
+  <section class="card clCard" style="--lc:${col}">
+    <div class="row" style="justify-content:space-between"><span class="chip stn" style="--lc:${col}">${esc(c.s.name)} · ${c.j+1}/${c.n}</span><span class="qcount">${CL.i+1}/${CLAVES.length}</span></div>
+    <div class="bar" style="margin:12px 0 4px"><i style="width:${pct(CL.i+1,CLAVES.length)}%;background:${col}"></i></div>
+    <div class="clText">${c.f}</div>
+    <div class="clNav"><button class="btn ghost" data-cl="${CL.i-1}" ${CL.i?'':'disabled'}>${I('flecha')}Anterior</button><button class="btn primary" data-cl="${CL.i+1}" ${CL.i<CLAVES.length-1?'':'disabled'}>Siguiente${I('adelante')}</button></div>
+    <div class="clJump">${ST.filter(s=>(FICHAS[s.id]||[]).length).map(s=>{const k=CLAVES.findIndex(x=>x.s===s);return `<button class="${s===c.s?'on':''}" data-cl="${k}" style="--lc:${LINES[s.line].c}">${esc(s.name)}</button>`}).join('')}</div>
+  </section>
+  <div class="row" style="margin-top:12px"><button class="btn line" data-trip="${c.s.id}" data-n="10">Practicar ${esc(c.s.name)}: 10 preguntas${I('adelante')}</button></div>
+  <p class="keys">Atajos: <kbd>←</kbd> <kbd>→</kbd> para pasar las claves</p>`,col);
+}
 /* ---------- Cápsulas de vídeo (datos en contenido.json → videos) ---------- */
 let VQ=null;
 function capsulas(){
@@ -558,7 +605,8 @@ function capsulas(){
 function capsula(id){
   const v=VIDEOS.find(x=>x.id===id);if(!v)return home();
   lastView='capsulas';VQ={v,i:0,ok:0,done:false};
-  const reales=ALL.filter(q=>v.buscar&&new RegExp(v.buscar,'i').test(q.q)).length;
+  const vReales=v=>ALL.filter(q=>(v.buscar&&new RegExp(v.buscar,'i').test(q.q))||(v.conceptos||[]).includes(q.t));
+  const reales=vReales(v).length;
   render(`${backBtn(VIDEOS.length>1?'capsulas':'home',VIDEOS.length>1?'Cápsulas':'Mapa')}
   <section class="card">
     <div class="eyebrow" style="color:#d23f57">Cápsula de vídeo</div><h2 style="margin:2px 0 12px">${esc(v.t)}</h2>
@@ -655,7 +703,7 @@ function ostoDraw(nueva){
   const html=`${backBtn('ostomias','La lámina')}
   <section class="card oGame">
     <div class="row" style="justify-content:space-between;align-items:flex-start"><div><div class="eyebrow" style="color:#d23f57">Fase ${OS.f+1} de 4</div><h3 style="margin:2px 0 4px">${f.t}</h3><p class="small" style="margin:0">${f.d}</p></div><span class="qcount">${OS.ok} pts</span></div>
-    <p class="oHint">${I('flecha')} Desliza la lámina para verla entera ${I('adelante')}</p>
+    <p class="oHint">${I('flecha')} Desliza la lámina o gira el móvil para verla entera ${I('adelante')}</p>
     <div class="oScroll" style="margin-top:12px"><div class="oStage"><img src="${IMAGENES.ostomias}" alt="" draggable="false">${zones}</div></div>
     <div class="oTray" role="group" aria-label="Etiquetas por colocar">${left?OS.chips.map((c,i)=>c.used?'':`<button class="oChip${OS.sel===i?' sel':''}" data-ochip="${i}">${esc(c.v)}</button>`).join(''):`<div class="oPhaseEnd"><div><b>${I('ok')} Fase completada.</b> ${f.regla}</div><button class="btn primary" data-ostonext>${OS.f<OSTO.length-1?'Siguiente fase':'Última fase: el recorrido'}${I('adelante')}</button></div>`}</div>
   </section>`;
@@ -991,10 +1039,12 @@ function csv(){
 /* ---------- navegación y eventos ---------- */
 function go(k){
   if(k==='home'||k==='mapa'){home();if(k==='mapa')setTimeout(()=>{const m=$('.mapCard');(m&&m.offsetParent?m:$('.metroV')).scrollIntoView({behavior:'smooth'})},50);return}
-  const V={capsulas,ostomias,sim:simSetup,escalas:escalasHome,archivo,cae,trampas,casos,lab,informe,bristol,mecv,buscar,colon:()=>{COL.mode='explore';colon()}};
+  const V={claves:()=>claves(),capsulas,ostomias,sim:simSetup,escalas:escalasHome,archivo,cae,trampas,casos,lab,informe,bristol,mecv,buscar,colon:()=>{COL.mode='explore';colon()}};
   if(V[k]) return V[k]();
   if(k==='repaso'){const items=shuffle(ALL.filter(q=>isDue(q.id))).slice(0,20);return startQuiz(items,{mode:'repaso',title:'Repaso inteligente',color:'#d23f57'})}
   if(k==='dia') return startQuiz(dailyTrip(),{mode:'dia',title:'Viaje del día',color:'#0aa8e5'});
+  if(k==='rapido') return startQuiz(dailyTrip().slice(0,5),{mode:'dia',title:'Repaso de 5 minutos',color:'#0aa8e5'});
+  if(k==='fallos') return startQuiz(prioritize(ALL.filter(q=>isPending(q.id)),'all'),{mode:'repaso',title:'Mis fallos',color:'#d23f57'});
   if(k==='next'){const s=ST.slice().sort((a,b)=>{const A=stationStats(a.id),B=stationStats(b.id);return pct(A.mastered,A.total)-pct(B.mastered,B.total)})[0];return station(s.id)}
 }
 document.addEventListener('click',e=>{
@@ -1017,26 +1067,29 @@ document.addEventListener('click',e=>{
   if(d.sure!==undefined) return next(d.sure==='1');
   if(t.hasAttribute('data-next')){if(G.i<G.items.length-1){G.i++;drawQ()}else{const blank=G.items.filter(i=>i.pick===null).length;if(!blank||confirm(`Tienes ${blank} sin responder (cuentan como en blanco). ¿Entregar?`))finish()}return}
   if(t.hasAttribute('data-prev')){G.i--;drawQ();return}
-  if(t.hasAttribute('data-exit')){if(G.mode==='sim'&&G.items.some(i=>i.pick!==null)&&!confirm('¿Salir del simulacro? Se perderán las respuestas.'))return;clearInterval(G.tm);return goBack(G.back)}
+  if(t.hasAttribute('data-exit')){if(G.mode!=='sim'&&G.items[G.i].pick!==null&&G.i<G.items.length-1){G.i++;guardaSesion()}else if(G.mode!=='sim')guardaSesion();if(G.mode==='sim'&&G.items.some(i=>i.pick!==null)&&!confirm('¿Salir del simulacro? Se perderán las respuestas.'))return;clearInterval(G.tm);return goBack(G.back)}
   if(t.hasAttribute('data-backto')) return goBack(G.back);
   if(t.hasAttribute('data-redo')) return startQuiz(shuffle(G.fails),{mode:'repaso',title:'Repetir fallos',color:'#d23f57',back:G.back,rule:G.rule});
   const grp=t.parentElement&&t.parentElement.dataset.group;
   if(grp==='n'){SIM.n=+d.v;return simSetup()}
   if(grp==='s'){SIM.s=d.v;return simSetup()}
   if(grp==='org'){SIM.org=d.v;return simSetup()}
+  if(grp==='pen'){SIM.pen=+d.v;return simSetup()}
   if(grp==='cat'){EX.cat=d.v;return escalasHome()}
-  if(t.hasAttribute('data-simgo')){const items=shuffle(simPool()).slice(0,SIM.n);const f=[SIM.org!=='all'?SIM.org:'',SIM.s!=='all'?stById[SIM.s].name:'',SIM.rec?'desde '+RECENT:''].filter(Boolean).join(' · ');return startQuiz(items,{mode:'sim',title:'Simulacro OPE',color:'#3c3fb8',filtro:f,back:'sim',secs:SIM.crono?items.length*60:0})}
+  if(t.hasAttribute('data-simgo')){const items=sinGemelas(shuffle(simPool())).slice(0,SIM.n);const f=[SIM.org!=='all'?SIM.org:'',SIM.s!=='all'?stById[SIM.s].name:'',SIM.rec?'desde '+RECENT:''].filter(Boolean).join(' · ');return startQuiz(items,{mode:'sim',title:'Simulacro OPE',color:'#3c3fb8',filtro:f,back:'sim',secs:SIM.crono?items.length*60:0,pen:SIM.pen})}
   if(t.hasAttribute('data-exgo')) return exStart();
   if(d.ex!==undefined) return exAnswer(+d.ex);
   if(t.hasAttribute('data-exnext')) return exNext();
   if(t.hasAttribute('data-colonquiz')){COL.mode='quiz';COL.round={order:shuffle(SEGS.map(s=>s.k)),i:0,ok:0,state:{},done:false};return colonQuiz()}
   if(d.cons!==undefined) return colonAnswer(+d.cons);
   if(t.hasAttribute('data-colonnext')) return colonNext();
+  if(t.hasAttribute('data-seguir')) return seguir();
+  if(d.cl!==undefined) return claves(+d.cl);
   if(d.vid) return capsula(d.vid);
   if(d.vq!==undefined) return vqAnswer(+d.vq);
   if(t.hasAttribute('data-vqnext')) return vqNext();
   if(t.hasAttribute('data-vredo')){VQ.i=0;VQ.ok=0;VQ.done=false;return vqDraw()}
-  if(d.vreal){const v=VIDEOS.find(x=>x.id===d.vreal);return startQuiz(prioritize(ALL.filter(q=>new RegExp(v.buscar,'i').test(q.q)),'all'),{mode:'video',title:'Preguntas reales: '+v.t,color:'#d23f57',back:'capsulas'})}
+  if(d.vreal){const v=VIDEOS.find(x=>x.id===d.vreal);return startQuiz(prioritize(ALL.filter(q=>(v.buscar&&new RegExp(v.buscar,'i').test(q.q))||(v.conceptos||[]).includes(q.t)),'all'),{mode:'video',title:'Preguntas reales: '+v.t,color:'#d23f57',back:'capsulas'})}
   if(t.hasAttribute('data-ostogo')) return ostoStart();
   if(t.hasAttribute('data-ostover')) return ostoVer();
   if(t.hasAttribute('data-ostonext')){if(OS.f<OSTO.length-1){OS.f++;return ostoPhase()}return ostoRuta()}
@@ -1055,6 +1108,7 @@ app.addEventListener('keydown',e=>{if((e.key==='Enter'||e.key===' ')&&e.target.m
 document.addEventListener('keydown',e=>{
   if(e.altKey||e.ctrlKey||e.metaKey||/input|textarea|select/i.test(e.target.tagName))return;
   const k=e.key.toLowerCase();
+  if(lastView==='claves'&&(e.key==='ArrowRight'||e.key==='ArrowLeft')&&$('.clCard')){claves(CL.i+(e.key==='ArrowRight'?1:-1));e.preventDefault();return}
   const opts=$$('.opt:not([disabled])',app).filter(b=>b.tagName==='BUTTON');
   const idx='abcde'.indexOf(k)>=0?'abcde'.indexOf(k):'12345'.indexOf(k);
   if(idx>=0&&opts[idx]&&k.length===1){opts[idx].click();e.preventDefault();return}

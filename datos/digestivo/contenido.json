@@ -67,7 +67,7 @@
   "sondas": [
    "<b>Levin</b> 1 luz · <b>Salem</b> 2 luces (aspiración) · <b>Foucher/Ewald</b> orogástricas gruesas (lavado) · <b>Sengstaken</b> 3 vías y 2 balones · <b>Minnesota</b> 4 vías · <b>Linton</b> 1 balón.",
    "<b>Inserción:</b> Fowler, medida NEX (nariz → lóbulo de la oreja → xifoides), técnica limpia (no estéril), flexionar el cuello al avanzar.",
-   "<b>Verificación:</b> radiografía (referencia) y pH ≤ 4 a pie de cama. NUNCA auscultación de aire ni burbujas en agua.",
+   "<b>Verificación:</b> radiografía (referencia) y pH ≤ 5,5 a pie de cama. NUNCA auscultación de aire ni burbujas en agua.",
    "<b>Contraindicaciones:</b> cáusticos, perforación u obstrucción esofágica, fractura facial o de la base del cráneo (→ vía oral).",
    "<b>Retirada:</b> Fowler, lavar, PINZAR y retirar en inspiración mantenida. Fijación: cambiarla a diario.",
    "<b>Enema:</b> Sims (decúbito lateral izquierdo), unos 40 °C, irrigador a 30-45 cm, sonda 7,5-10 cm en el adulto. Harris = gases. <b>Lavado gástrico:</b> decúbito lateral izquierdo + Trendelenburg."
@@ -483,7 +483,7 @@
    "id": "verificacion",
    "t": "pH sí, auscultación no",
    "engano": "Proponen la auscultación del aire insuflado, las burbujas en agua o la ausencia de tos como métodos fiables.",
-   "regla": "Referencia: radiografía. A pie de cama: aspirar y medir el pH (≤ 4 = estómago). La auscultación NO es fiable."
+   "regla": "Referencia: radiografía. A pie de cama: aspirar y medir el pH (≤ 5,5 = estómago). La auscultación NO es fiable."
   },
   {
    "id": "distal",
@@ -875,6 +875,9 @@
      "a": 1,
      "e": "Regla de oro: cuanto más alto el número, más agua y más rápido ha pasado por el intestino."
     }
+   ],
+   "conceptos": [
+    "eliminacion"
    ]
   }
  ]
