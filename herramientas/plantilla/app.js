@@ -647,12 +647,12 @@ const OSTO=[
  {k:'est',t:'Ubica cada estoma',d:'Lleva cada ostomía a su recuadro. Sigue la flecha: apunta al tramo donde se abre el estoma.',
   pista:'Fíjate en la flecha de cada recuadro y recuerda que el dibujo está de frente: la derecha del paciente queda a tu izquierda.',
   regla:'De proximal a distal: ileostomía → cecostomía → colostomías ascendente, transversa y descendente → sigmoidostomía.',
-  z:[{id:'e1',v:'Ileostomía',...OZ(748,886,956,951),i:'Íleon terminal, casi siempre en la FID. Débito continuo: vigila la deshidratación.'},
-     {id:'e2',v:'Cecostomía',...OZ(420,755,663,820),i:'Es la ostomía más proximal del colon.'},
-     {id:'e3',v:'Colostomía ascendente',...OZ(346,325,589,428),i:'Lado derecho del paciente: a tu izquierda en el dibujo.'},
-     {id:'e4',v:'Colostomía transversa',...OZ(757,113,1000,216),i:'Suele hacerse en asa, con varilla de soporte.'},
-     {id:'e5',v:'Colostomía descendente',...OZ(1421,307,1664,412),i:'Lado izquierdo del paciente. Admite la irrigación.'},
-     {id:'e6',v:'Sigmoidostomía',...OZ(1237,830,1517,895),i:'En la FII. Es la evacuación más parecida a la normal.'}]},
+  z:[{id:'e1',v:'Ileostomía',...OZ(739,877,965,960),i:'Íleon terminal, casi siempre en la FID. Débito continuo: vigila la deshidratación.'},
+     {id:'e2',v:'Cecostomía',...OZ(411,746,672,829),i:'Es la ostomía más proximal del colon.'},
+     {id:'e3',v:'Colostomía ascendente',...OZ(337,316,598,437),i:'Lado derecho del paciente: a tu izquierda en el dibujo.'},
+     {id:'e4',v:'Colostomía transversa',...OZ(748,104,1009,225),i:'Suele hacerse en asa, con varilla de soporte.'},
+     {id:'e5',v:'Colostomía descendente',...OZ(1412,298,1673,421),i:'Lado izquierdo del paciente. Admite la irrigación.'},
+     {id:'e6',v:'Sigmoidostomía',...OZ(1228,821,1526,904),i:'En la FII. Es la evacuación más parecida a la normal.'}]},
  {k:'hec',t:'¿Cómo salen las heces?',d:'Coloca cada consistencia sobre la deposición que corresponde a cada tramo.',
   pista:'A medida que el contenido avanza por el colon se absorbe agua: cuanto más distal, más formadas.',
   regla:'Cuanto más distal es el estoma, más sólidas son las heces (el colon ha tenido tiempo de absorber agua).',
@@ -698,7 +698,7 @@ function ostoDraw(nueva){
   const f=OSTO[OS.f];
   const zones=OSTO.map((ph,pi)=>ph.z.map(z=>{
     const st=OS.done[z.id]?'done':pi===OS.f?'tgt':pi>OS.f?'later':'done';
-    return `<button class="oz ${st}" data-oz="${z.id}" style="left:${z.l}%;top:${z.t}%;width:${z.w}%;height:${z.h}%" ${st==='tgt'?`aria-label="Hueco para ${esc(f.t.toLowerCase())}"`:'tabindex="-1" aria-hidden="true"'}></button>`}).join('')).join('');
+    return `<button class="oz ${st} k-${ph.k}" data-oz="${z.id}" style="left:${z.l}%;top:${z.t}%;width:${z.w}%;height:${z.h}%" ${st==='tgt'?`aria-label="Hueco para ${esc(f.t.toLowerCase())}"`:'tabindex="-1" aria-hidden="true"'}></button>`}).join('')).join('');
   const left=OS.chips.filter(c=>!c.used).length;
   const html=`${backBtn('ostomias','La lámina')}
   <section class="card oGame">
