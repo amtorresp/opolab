@@ -469,9 +469,18 @@ function goBack(b){if(stById[b])return station(b);if(b.startsWith('trampa:'))ret
 
 /* ---------- simulacro ---------- */
 const ORGS=uniq(EXAM.map(q=>q.org)).sort((a,b)=>a.localeCompare(b,'es'));
-let SIM={n:20,s:'all',org:'all',rec:false,crono:false,pen:3};
+let SIM={n:20,s:new Set(),org:new Set(),y:new Set(),crono:false,pen:3};
+const YEARS=uniq(EXAM.map(q=>q.y)).sort((a,b)=>b-a);
 const PEN={3:'−1/3 por error',4:'−1/4 por error',0:'sin penalización'};
-const simPool=()=>EXAM.filter(q=>(SIM.s==='all'||q.s===SIM.s)&&(SIM.org==='all'||q.org===SIM.org)&&(!SIM.rec||q.y>=RECENT));
+const simOk=(q,skip)=>(skip==='s'||!SIM.s.size||SIM.s.has(q.s))&&(skip==='org'||!SIM.org.size||SIM.org.has(q.org))&&(skip==='y'||!SIM.y.size||SIM.y.has(q.y));
+const simPool=()=>EXAM.filter(q=>simOk(q));
+const simCount=(k,v)=>EXAM.filter(q=>simOk(q,k)&&(k==='s'?q.s===v:k==='org'?q.org===v:q.y===v)).length;
+const simChips=(k,items,lab,todo)=>`<div class="filters multi" data-group="${k}"><button class="${SIM[k].size?'':'on'}" data-v="__all">${todo}</button>${items.map(v=>{const n=simCount(k,v);return `<button class="${SIM[k].has(v)?'on':''}${n||SIM[k].has(v)?'':' empty'}" data-v="${esc(v)}">${esc(lab(v))} <span>${n}</span></button>`}).join('')}</div>`;
+function simToggle(k,v){
+  if(v==='__all'){SIM[k].clear();return}
+  if(k==='y')v=+v;
+  SIM[k].has(v)?SIM[k].delete(v):SIM[k].add(v);
+}
 function simSetup(){
   lastView='sim';
   const pool=sinGemelas(simPool());
@@ -484,11 +493,13 @@ function simSetup(){
       <h3 style="margin-top:18px">Penalización por error</h3>
       <div class="seg3" data-group="pen">${[3,4,0].map(v=>`<button class="${SIM.pen===v?'on':''}" data-v="${v}">${v?'−1/'+v:'Ninguna'}</button>`).join('')}</div>
       <p class="small" style="margin:6px 0 0">Consulta las bases de tu convocatoria: la mayoría resta 1/3 o 1/4 por cada error; los errores en blanco no restan.</p>
-      <h3 style="margin-top:18px">Comunidad o servicio de salud</h3>
-      <div class="filters" data-group="org"><button class="${SIM.org==='all'?'on':''}" data-v="all">Todas</button>${ORGS.map(o=>`<button class="${SIM.org===o?'on':''}" data-v="${esc(o)}">${esc(o)} (${EXAM.filter(q=>q.org===o).length})</button>`).join('')}</div>
-      <h3 style="margin-top:18px">Temario</h3>
-      <div class="filters" data-group="s"><button class="${SIM.s==='all'?'on':''}" data-v="all">Todo el tema</button>${ST.map(s=>`<button class="${SIM.s===s.id?'on':''}" data-v="${s.id}">${s.name}</button>`).join('')}</div>
-      <label class="toggle"><input type="checkbox" data-rec ${SIM.rec?'checked':''}> Solo convocatorias desde ${RECENT}</label>
+      <h3 style="margin-top:18px">Comunidad o servicio de salud <span class="hint">puedes marcar varias</span></h3>
+      ${simChips('org',ORGS,o=>o,'Todas')}
+      <h3 style="margin-top:18px">Temario <span class="hint">puedes marcar varios</span></h3>
+      ${simChips('s',ST.map(x=>x.id),id=>stById[id].name,'Todo el tema')}
+      <h3 style="margin-top:18px">Año del examen <span class="hint">uno, varios o todos</span></h3>
+      ${simChips('y',YEARS,y=>y,'Todos los años')}
+      <div class="yQuick"><button data-yq="${RECENT}">Desde ${RECENT}</button><button data-yq="${YEARS[0]-2}">Últimos 3 años</button><button data-yq="${YEARS[0]}">Solo ${YEARS[0]}</button></div>
       <label class="toggle"><input type="checkbox" data-crono ${SIM.crono?'checked':''}> Con cronómetro (1 minuto por pregunta)</label>
       <p class="small" style="margin-top:12px">Preguntas disponibles con estos filtros: <b>${pool.length}</b>${pool.length<SIM.n?` (el simulacro tendrá ${pool.length})`:''}</p>
       <div style="margin-top:8px"><button class="btn primary" data-simgo ${pool.length?'':'disabled'}>Empezar simulacro${I('adelante')}</button></div>
@@ -1072,11 +1083,11 @@ document.addEventListener('click',e=>{
   if(t.hasAttribute('data-redo')) return startQuiz(shuffle(G.fails),{mode:'repaso',title:'Repetir fallos',color:'#d23f57',back:G.back,rule:G.rule});
   const grp=t.parentElement&&t.parentElement.dataset.group;
   if(grp==='n'){SIM.n=+d.v;return simSetup()}
-  if(grp==='s'){SIM.s=d.v;return simSetup()}
-  if(grp==='org'){SIM.org=d.v;return simSetup()}
+  if(grp==='s'||grp==='org'||grp==='y'){simToggle(grp,d.v);return simSetup()}
+  if(d.yq){SIM.y=new Set(YEARS.filter(y=>y>=+d.yq));return simSetup()}
   if(grp==='pen'){SIM.pen=+d.v;return simSetup()}
   if(grp==='cat'){EX.cat=d.v;return escalasHome()}
-  if(t.hasAttribute('data-simgo')){const items=sinGemelas(shuffle(simPool())).slice(0,SIM.n);const f=[SIM.org!=='all'?SIM.org:'',SIM.s!=='all'?stById[SIM.s].name:'',SIM.rec?'desde '+RECENT:''].filter(Boolean).join(' · ');return startQuiz(items,{mode:'sim',title:'Simulacro OPE',color:'#3c3fb8',filtro:f,back:'sim',secs:SIM.crono?items.length*60:0,pen:SIM.pen})}
+  if(t.hasAttribute('data-simgo')){const items=sinGemelas(shuffle(simPool())).slice(0,SIM.n);const lst=(set,fn)=>{const a=[...set].map(fn);return a.length>3?a.slice(0,3).join(', ')+' y '+(a.length-3)+' más':a.join(', ')};const f=[SIM.org.size?lst(SIM.org,x=>x):'',SIM.s.size?lst(SIM.s,x=>stById[x].name):'',SIM.y.size?lst([...SIM.y].sort(),x=>x):''].filter(Boolean).join(' · ');return startQuiz(items,{mode:'sim',title:'Simulacro OPE',color:'#3c3fb8',filtro:f,back:'sim',secs:SIM.crono?items.length*60:0,pen:SIM.pen})}
   if(t.hasAttribute('data-exgo')) return exStart();
   if(d.ex!==undefined) return exAnswer(+d.ex);
   if(t.hasAttribute('data-exnext')) return exNext();
@@ -1103,7 +1114,7 @@ document.addEventListener('click',e=>{
   if(t.hasAttribute('data-csv')) return csv();
   if(t.hasAttribute('data-print')) return window.print();
 });
-app.addEventListener('change',e=>{if(e.target.matches('[data-rec]')){SIM.rec=e.target.checked;simSetup()}if(e.target.matches('[data-crono]')){SIM.crono=e.target.checked}});
+app.addEventListener('change',e=>{if(e.target.matches('[data-crono]')){SIM.crono=e.target.checked}});
 app.addEventListener('keydown',e=>{if((e.key==='Enter'||e.key===' ')&&e.target.matches('g.st,[data-seg]')){e.preventDefault();e.target.dispatchEvent(new MouseEvent('click',{bubbles:true}))}});
 document.addEventListener('keydown',e=>{
   if(e.altKey||e.ctrlKey||e.metaKey||/input|textarea|select/i.test(e.target.tagName))return;
