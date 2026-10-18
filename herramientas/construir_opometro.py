@@ -92,10 +92,40 @@ def leer_preguntas(contenido):
         po = [g(f'Por qué no {l}') for l in 'abcd'][:len(opciones)]
         if any(po):
             q['po'] = po
+        if g('Idea clave'):
+            q['k'] = g('Idea clave')
         if g('Nota de revisión'):
             q['f'] = g('Nota de revisión')
         preguntas.append(q)
+    marcar_repetidas(preguntas)
     return preguntas, errores
+
+def marcar_repetidas(preguntas):
+    """Agrupa las preguntas que se repiten en varias convocatorias (mismo enunciado y misma respuesta)."""
+    from difflib import SequenceMatcher
+    norm = lambda t: re.sub(r'\W+', ' ', t.lower()).strip()
+    base = [(norm(q['q']), norm(q['o'][q['a']])) for q in preguntas]
+    padre = list(range(len(preguntas)))
+    def raiz(i):
+        while padre[i] != i:
+            padre[i] = padre[padre[i]]; i = padre[i]
+        return i
+    for i in range(len(preguntas)):
+        for j in range(i + 1, len(preguntas)):
+            (qi, ai), (qj, aj) = base[i], base[j]
+            if abs(len(qi) - len(qj)) > 40:
+                continue
+            m = SequenceMatcher(None, qi, qj)
+            if m.quick_ratio() > 0.9 and m.ratio() > 0.9 and SequenceMatcher(None, ai, aj).ratio() > 0.75:
+                padre[raiz(j)] = raiz(i)
+    grupos = {}
+    for i, q in enumerate(preguntas):
+        grupos.setdefault(raiz(i), []).append(q)
+    for g in grupos.values():
+        if len(g) > 1:
+            for q in g:
+                q['g'] = g[0]['id']                                   # identificador del grupo
+                q['rep'] = [x['ex'] for x in g if x is not q]          # en qué otras convocatorias ha caído
 
 def main():
     contenido = json.loads((DATOS / 'contenido.json').read_text(encoding='utf-8'))

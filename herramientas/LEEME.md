@@ -72,3 +72,10 @@ Se definen en `datos/digestivo/contenido.json`, en la lista `videos`. Cada cáps
 - Con Dropbox: en el enlace compartido, cambie `dl=0` por `raw=1` para `src`.
 - Con Google Drive no sirve el enlace normal dentro del reproductor; use Dropbox, YouTube o un MP4 alojado.
 - La primera cápsula aparece destacada en la portada.
+
+## Idea clave, preguntas repetidas y revisión
+
+- **Idea clave** (columna nueva del Excel): una frase que el alumno ve destacada al responder. Todas las actuales están redactadas con IA y pendientes de validar (columna «Origen de los textos nuevos»).
+- Los «Por qué no» que faltaban también están redactados con IA y pendientes de validar.
+- Los avisos de la revisión automática están en «Nota de revisión», empezando por «Aviso IA:». Se ven en el juego con `?docente=1`.
+- **Preguntas repetidas**: el constructor detecta las preguntas que se repiten en varias convocatorias (mismo enunciado y misma respuesta). En el juego se marcan con «Ha caído N veces» y nunca salen dos gemelas en la misma sesión.
